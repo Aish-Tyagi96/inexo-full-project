@@ -5,6 +5,9 @@ const { initializeDatabase } = require('./app/models');
 const logger = require('./app/utils/logger');
 const { seedDefaultAuthData } = require('./app/services/bootstrap.service');
 
+
+// test
+
 function handleListenError(error) {
   if (error.code === 'EADDRINUSE') {
     logger.fatal({ port: env.PORT, error }, 'Inexo backend port is already in use');
