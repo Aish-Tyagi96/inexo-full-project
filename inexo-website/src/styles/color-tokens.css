@@ -1,0 +1,95 @@
+:root {
+  --color-brand-accent-yellow: #ffb400;
+  --color-brand-primary-blue: #00307a;
+  --color-pill-background: #00307A;
+  --color-pill-text: #FFFFFF;
+  --color-surface-foundry-product-card-panel: rgba(0, 48, 122, 0.6);
+  --color-text-foundry-product-card-title: var(--color-neutral-white);
+  --color-text-foundry-product-card-description: var(--color-neutral-white);
+  --color-text-foundry-product-card-cta: var(--color-neutral-white);
+  --color-text-purpose-card-title: #00307a;
+  --color-text-purpose-card-description: rgba(0, 48, 122, 0.78);
+  --color-text-news-media-card-title: #00307a;
+  --color-text-news-media-card-description: rgba(0, 48, 122, 0.85);
+  --color-text-news-media-card-date: #adadad;
+  --color-text-news-media-card-read-more: #00307a;
+  --color-text-section-label: #00307a;
+  --color-text-solution-summary: #2A2A2A;
+  --color-text-solution-accordion-label: #00307a;
+  --color-text-solution-accordion-value: #2A2A2A;
+  --color-text-products-benefits-group-title: #00307A;
+  --color-text-products-benefits-list: #2A2A2A;
+  --color-marker-products-benefits-list: #1F1F1F;
+  --color-hero-title-on-light: #00307A;
+  --color-search-input-text: rgba(3, 15, 149, 0.33);
+  --color-text-managing-director-desk-heading: var(--color-neutral-white);
+  --color-text-managing-director-desk-body: rgba(255, 255, 255, 0.85);
+  --color-text-footer-address: rgba(255, 255, 255, 0.95);
+  --color-text-footer-section-heading: var(--color-neutral-white);
+  --color-text-footer-office-heading: var(--color-neutral-white);
+  --color-text-footer-submit-button: #030f95;
+  --color-surface-page: #f7f9fb;
+  --color-neutral-white: #fff;
+  --color-neutral-black: #000;
+  --color-text-primary: #000;
+  --color-text-careers-body: #030F95;
+  --color-text-careers-card-title: #030F95;
+  --color-text-faq-question: #030F95;
+}
+
+.text-brand-accent-yellow,
+.text-brand-yellow {
+  color: var(--color-brand-accent-yellow);
+}
+
+.text-solution-summary {
+  color: var(--color-text-solution-summary);
+}
+
+.text-brand-primary-blue,
+.text-brand-blue {
+  color: var(--color-brand-primary-blue);
+}
+
+.text-neutral-white,
+.text-brand-white {
+  color: var(--color-neutral-white);
+}
+
+.text-neutral-black,
+.text-brand-black {
+  color: var(--color-neutral-black);
+}
+
+.text-careers-body {
+  color: var(--color-text-careers-body);
+}
+
+.text-careers-card-title {
+  color: var(--color-text-careers-card-title);
+}
+
+.text-faq-question {
+  color: var(--color-text-faq-question);
+}
+
+.bg-brand-accent-yellow,
+.bg-brand-yellow {
+  background-color: var(--color-brand-accent-yellow);
+}
+
+.bg-brand-primary-blue,
+.bg-brand-blue {
+  background-color: var(--color-brand-primary-blue);
+}
+
+.bg-surface-page,
+.bg-surface-light {
+  background-color: var(--color-surface-page);
+}
+
+.bg-neutral-white,
+.bg-brand-white {
+  background-color: var(--color-neutral-white);
+}
+

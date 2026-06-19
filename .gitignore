@@ -1,0 +1,33 @@
+# Monorepo Root GitIgnore
+
+# Dependencies
+**/node_modules/
+
+# Production build outputs
+**/dist/
+**/dist-ssr/
+**/build/
+
+# Local Environment Variables
+**/.env
+**/.env.local
+**/.env.*
+!**/.env.example
+
+# Backend files (database, logs and uploads)
+inexo-backend/uploads/
+inexo-backend/.data/*.sqlite
+inexo-backend/.data/*.sqlite-journal
+**/logs/
+**/*.log
+
+# IDE, OS, and temporary files
+**/.vscode/*
+!**/.vscode/extensions.json
+**/.idea/
+**/.DS_Store
+**/*.suo
+**/*.ntvs*
+**/*.njsproj
+**/*.sln
+**/*.sw?

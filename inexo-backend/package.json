@@ -1,0 +1,47 @@
+{
+  "name": "inexo-backend",
+  "version": "1.0.0",
+  "description": "Production-oriented backend for Inexo",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "start:prod": "cross-env NODE_ENV=production node server.js",
+    "build:website": "npm run build --prefix ../inexo-website",
+    "build:admin": "npm run build --prefix ../inexo-admin-portal",
+    "build:frontends": "npm run build:website && npm run build:admin",
+    "db:seed": "node scripts/seed.js"
+  },
+  "keywords": [
+    "inexo",
+    "express",
+    "sequelize",
+    "backend"
+  ],
+  "license": "UNLICENSED",
+  "author": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "compression": "^1.8.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.1",
+    "helmet": "^8.1.0",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1",
+    "mysql2": "^3.22.3",
+    "pino": "^10.3.1",
+    "pino-http": "^11.0.0",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "nodemon": "^3.1.14",
+    "pino-pretty": "^13.1.3"
+  }
+}

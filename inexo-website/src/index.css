@@ -1,0 +1,352 @@
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+@import '@fontsource/ibm-plex-sans/700.css';
+@import '@fontsource/ibm-plex-serif/300.css';
+@import '@fontsource/ibm-plex-serif/400.css';
+@import '@fontsource/ibm-plex-serif/500.css';
+@import '@fontsource/ibm-plex-serif/600.css';
+@import '@fontsource/ibm-plex-serif/700.css';
+@import 'tailwindcss';
+@import './styles/color-tokens.css';
+@import './styles/typography-tokens.css';
+@import './styles/typography-presets.css';
+
+:root {
+  --container-max-width: 1728px;
+  color-scheme: light;
+  font-family: var(--font-family-primary-sans);
+  font-style: normal;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #f6efe8;
+  background:
+    radial-gradient(circle at top left, rgba(255, 164, 110, 0.26), transparent 38%),
+    radial-gradient(circle at top right, rgba(84, 159, 255, 0.18), transparent 30%),
+    linear-gradient(180deg, #211814 0%, #120f12 52%, #09090b 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --color-bg: #120f12;
+  --color-surface: rgba(27, 22, 26, 0.82);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-copy: rgba(246, 239, 232, 0.74);
+  --color-accent: #ff9b63;
+  --color-accent-strong: #ffe6c6;
+  --color-cyan: #87d5ff;
+  --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.66), transparent 85%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.site-container {
+  width: min(calc(100% - 27px), var(--container-max-width));
+  margin-inline: auto;
+}
+
+.clip-news-panel {
+  clip-path: polygon(0 0, 75% 0, 100% 100%, 25% 100%);
+}
+
+@media (min-width: 768px) {
+  .site-container {
+    width: min(calc(100% - 54px), var(--container-max-width));
+  }
+}
+
+@media (max-width: 1023px) {
+  .clip-news-panel {
+    clip-path: none;
+  }
+}
+
+.app-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.app-shell::after {
+  content: '';
+  position: absolute;
+  inset: auto -12% -10% auto;
+  width: 24rem;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(135, 213, 255, 0.2), transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.card-panel {
+  border: 1px solid var(--color-border);
+  background: linear-gradient(180deg, rgba(39, 31, 37, 0.92), rgba(18, 15, 18, 0.82));
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(18px);
+}
+
+.eyebrow {
+  font-family: 'IBM Plex Sans', sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.text-copy {
+  color: var(--color-copy);
+}
+
+.field {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.95rem 1rem;
+  color: #fff7ef;
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.field:focus {
+  outline: none;
+  border-color: rgba(255, 155, 99, 0.82);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.button-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-radius: 999px;
+  border: 0;
+  background: linear-gradient(135deg, #ff9b63, #ffd57d);
+  padding: 0.95rem 1.35rem;
+  color: #161112;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(255, 155, 99, 0.3);
+}
+
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 0.95rem 1.35rem;
+  color: #f8ede6;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+
+.button-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(135, 213, 255, 0.18);
+  background: rgba(135, 213, 255, 0.08);
+  padding: 0.5rem 0.8rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8rem;
+  color: #dff5ff;
+}
+
+.status-chip::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #87d5ff;
+  box-shadow: 0 0 0 0 rgba(135, 213, 255, 0.7);
+  animation: pulse 2.2s infinite;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fade-up 650ms ease forwards;
+}
+
+.fade-up-delay {
+  animation-delay: 120ms;
+}
+
+.fade-up-late {
+  animation-delay: 240ms;
+}
+
+.hero-media-slide-in-right {
+  opacity: 0;
+  transform: translateX(100%) scale(1.04);
+  animation: hero-slide-in-right 800ms ease forwards;
+}
+
+.hero-media-slide-in-left {
+  opacity: 0;
+  transform: translateX(-100%) scale(1.04);
+  animation: hero-slide-in-left 800ms ease forwards;
+}
+
+.hero-copy-slide-in-right {
+  opacity: 0;
+  transform: translateX(100%) translateY(28px);
+  animation: hero-slide-in-right 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-copy-slide-in-left {
+  opacity: 0;
+  transform: translateX(-100%) translateY(28px);
+  animation: hero-slide-in-left 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.testimonial-slide-in-next {
+  opacity: 0;
+  transform: translateX(14%);
+  animation: hero-slide-in-right 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.testimonial-slide-in-previous {
+  opacity: 0;
+  transform: translateX(-14%);
+  animation: hero-slide-in-left 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-slide-in-right {
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+@keyframes hero-slide-in-left {
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(135, 213, 255, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(135, 213, 255, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(135, 213, 255, 0);
+  }
+}
+
+@media (max-width: 768px) {
+  body::before {
+    background-size: 44px 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-media-slide-in-right,
+  .hero-media-slide-in-left,
+  .hero-copy-slide-in-right,
+  .hero-copy-slide-in-left,
+  .testimonial-slide-in-next,
+  .testimonial-slide-in-previous {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* SolutionsShowcase: ensure list markers (bullets) use brand blue */
+.solutions-showcase li::marker {
+  /* Force a consistent marker appearance inside the SolutionsShowcase component */
+  color: var(--color-brand-primary-blue);
+  /* Scale relative to the list text so bullets look consistent across lists */
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+/* Keep casting/process accordion list item marker sizing in sync with products/benefits list */
+.solutions-showcase .solution-accordion-list-item {
+  font-size: var(--font-size-products-benefits-list);
+}
+
+/* Ensure product-benefits specific marker rule doesn't override our color/size inside this component */
+.solutions-showcase .products-benefits-list-item::marker {
+  color: var(--color-brand-primary-blue);
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+/* Gallery Lightbox Modal Fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 250ms ease-out forwards;
+}
