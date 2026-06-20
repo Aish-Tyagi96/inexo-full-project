@@ -7,6 +7,8 @@ export default function SnackbarToast() {
   const dispatch = useDispatch()
   const { open, message, severity } = useSelector(selectToast)
 
+  console.log('SnackbarToast Rendered - State:', { open, message, severity })
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
