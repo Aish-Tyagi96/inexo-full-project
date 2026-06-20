@@ -4,8 +4,13 @@ import authReducer from '@/features/auth/authSlice'
 import toastReducer, { showToast } from '@/features/toast/toastSlice'
 
 const rtkQueryErrorLogger = (api) => (next) => (action) => {
-  if (isRejectedWithValue(action)) {
-    const errorMsg = action.payload?.data?.message || action.payload?.message || 'An error occurred'
+  if (isRejectedWithValue(action) || (action.type && action.type.endsWith('/rejected'))) {
+    const errorMsg =
+      (action.payload && typeof action.payload.data === 'string' ? action.payload.data : null) ||
+      action.payload?.data?.message ||
+      action.payload?.message ||
+      action.error?.message ||
+      'An error occurred'
     api.dispatch(showToast({ message: errorMsg, severity: 'error' }))
   }
   return next(action)
