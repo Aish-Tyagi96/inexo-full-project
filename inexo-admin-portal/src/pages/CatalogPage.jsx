@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import Alert from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -26,6 +27,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useDispatch } from 'react-redux'
+import { showToast } from '@/features/toast/toastSlice'
 import { apiRequest } from '@/api/apiClient'
 import { PageHeader } from '@/components/common/PageHeader'
 import { FormFileUpload, FormImageUpload, FormSection, FormSelectField, FormTextField } from '@/components/forms'
@@ -332,10 +335,9 @@ function EmptyRows({ colSpan, message }) {
 }
 
 export default function CatalogPage() {
+  const dispatch = useDispatch()
   const [activeTab, setActiveTab] = useState('categories')
   const [rowsPerPage, setRowsPerPage] = useState(5)
-  const [feedback, setFeedback] = useState(null)
-  const [dialogError, setDialogError] = useState(null)
   const [dialogState, setDialogState] = useState({ mode: 'create', section: 'categories', open: false, record: null })
   const [deleteConfirm, setDeleteConfirm] = useState({ open: false, type: '', id: null, message: '' })
   const catalogQuery = useGetCatalogTreeQuery()
@@ -416,13 +418,10 @@ export default function CatalogPage() {
   }, [activeTab, categories, products, rowsPerPage, subCategories])
 
   const openDialog = (section, mode = 'create', record = null) => {
-    setFeedback(null)
-    setDialogError(null)
     setDialogState({ mode, open: true, record, section })
   }
 
   const closeDialog = () => {
-    setDialogError(null)
     setDialogState({ mode: 'create', section: activeTab, open: false, record: null })
     categoryForm.reset({
       name: '',
@@ -563,7 +562,6 @@ export default function CatalogPage() {
   }, [dialogState, productForm])
 
   const handleCreateCategory = async (values) => {
-    setDialogError(null)
     try {
       const image = await normalizeImageValue(values.image, dialogState.record?.image || '')
       const carouselImage = await normalizeImageValue(values.carouselImage, dialogState.record?.carouselImage || image)
@@ -579,20 +577,19 @@ export default function CatalogPage() {
 
       if (dialogState.mode === 'edit' && dialogState.record) {
         await updateCategory({ categoryId: dialogState.record.id, ...payload }).unwrap()
-        setFeedback({ message: 'Category updated successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Category updated successfully.', severity: 'success' }))
       } else {
         await createCategory(payload).unwrap()
-        setFeedback({ message: 'Category created successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Category created successfully.', severity: 'success' }))
       }
 
       closeDialog()
-    } catch (err) {
-      setDialogError(err?.data?.message || err?.message || 'Failed to save category.')
+    } catch {
+      // Handled globally
     }
   }
 
   const handleCreateSubCategory = async (values) => {
-    setDialogError(null)
     try {
       const image = await normalizeImageValue(values.image, dialogState.record?.image || '')
       const carouselImage = await normalizeImageValue(values.carouselImage, dialogState.record?.carouselImage || image)
@@ -609,21 +606,20 @@ export default function CatalogPage() {
 
       if (dialogState.mode === 'edit' && dialogState.record) {
         await updateSubCategory({ subCategoryId: dialogState.record.id, ...payload }).unwrap()
-        setFeedback({ message: 'Subcategory updated successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Subcategory updated successfully.', severity: 'success' }))
       } else {
         await createSubCategory(payload).unwrap()
-        setFeedback({ message: 'Subcategory created successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Subcategory created successfully.', severity: 'success' }))
       }
 
       closeDialog()
-    } catch (err) {
-      setDialogError(err?.data?.message || err?.message || 'Failed to save subcategory.')
+    } catch {
+      // Handled globally
     }
   }
 
   const handleCreateProduct = async (values) => {
     productForm.clearErrors(['featureItems', 'benefitItems'])
-    setDialogError(null)
 
     if ((values.featureItems || []).some((item) => !itemHasAtLeastOneText(item))) {
       productForm.setError('featureItems', { type: 'manual', message: 'Each key feature must have at least one text. Title is optional.' })
@@ -663,15 +659,15 @@ export default function CatalogPage() {
 
       if (dialogState.mode === 'edit' && dialogState.record) {
         await updateProduct({ productId: dialogState.record.id, ...payload }).unwrap()
-        setFeedback({ message: 'Product updated successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Product updated successfully.', severity: 'success' }))
       } else {
         await createProduct(payload).unwrap()
-        setFeedback({ message: 'Product created successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Product created successfully.', severity: 'success' }))
       }
 
       closeDialog()
-    } catch (err) {
-      setDialogError(err?.data?.message || err?.message || 'Failed to save product.')
+    } catch {
+      // Handled globally
     }
   }
 
@@ -707,16 +703,16 @@ export default function CatalogPage() {
     try {
       if (type === 'category') {
         await deleteCategory(id).unwrap()
-        setFeedback({ message: 'Category deleted successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Category deleted successfully.', severity: 'success' }))
       } else if (type === 'subcategory') {
         await deleteSubCategory(id).unwrap()
-        setFeedback({ message: 'Subcategory deleted successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Subcategory deleted successfully.', severity: 'success' }))
       } else if (type === 'product') {
         await deleteProduct(id).unwrap()
-        setFeedback({ message: 'Product deleted successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Product deleted successfully.', severity: 'success' }))
       }
-    } catch (err) {
-      setFeedback({ message: err?.data?.message || `Failed to delete ${type}.`, severity: 'error' })
+    } catch {
+      // Handled globally
     } finally {
       setDeleteConfirm({ open: false, type: '', id: null, message: '' })
     }
@@ -730,7 +726,6 @@ export default function CatalogPage() {
       return (
         <FormProvider {...categoryForm}>
           <Stack component="form" onSubmit={categoryForm.handleSubmit(handleCreateCategory)} spacing={2.5}>
-            {dialogError ? <Alert severity="error">{dialogError}</Alert> : null}
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, md: 6 }}><FormTextField helperText="Slug will be created automatically from the category name." label="Category name" name="name" /></Grid>
               <Grid size={{ xs: 12, md: 6 }}><FormTextField helperText="Shown on category cards. Falls back to the category name." label="Card title" name="cardTitle" /></Grid>
@@ -753,7 +748,6 @@ export default function CatalogPage() {
       return (
         <FormProvider {...subCategoryForm}>
           <Stack component="form" onSubmit={subCategoryForm.handleSubmit(handleCreateSubCategory)} spacing={2.5}>
-            {dialogError ? <Alert severity="error">{dialogError}</Alert> : null}
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, md: 6 }}><FormSelectField label="Category" name="categoryId" options={categoryOptions} /></Grid>
               <Grid size={{ xs: 12, md: 6 }}><FormTextField helperText="Slug will be created automatically from the subcategory name." label="Subcategory name" name="name" /></Grid>
@@ -776,7 +770,6 @@ export default function CatalogPage() {
     return (
       <FormProvider {...productForm}>
         <Stack component="form" onSubmit={productForm.handleSubmit(handleCreateProduct)} spacing={2.5}>
-          {dialogError ? <Alert severity="error">{dialogError}</Alert> : null}
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, md: 6 }}><FormSelectField helperText="Optional for standalone products." label="Category" name="categoryId" options={categoryOptions} /></Grid>
             <Grid size={{ xs: 12, md: 6 }}><FormSelectField helperText="Choose a category first to filter this list." label="Subcategory" name="subCategoryId" options={productSubCategoryOptions} /></Grid>
@@ -885,7 +878,7 @@ export default function CatalogPage() {
           </Button>
         </Stack>
 
-        {feedback ? <Alert onClose={() => setFeedback(null)} severity={feedback.severity} sx={{ mb: 3 }}>{feedback.message}</Alert> : null}
+        {/* Global SnackbarToast handles notifications */}
         {catalogQuery.isError ? <Alert severity="error" sx={{ mb: 3 }}>{catalogQuery.error?.data?.message || 'Unable to load the catalog.'}</Alert> : null}
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ alignItems: { sm: 'center' }, mb: 2.5 }}>

@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import Alert from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -24,6 +25,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useDispatch } from 'react-redux'
+import { showToast } from '@/features/toast/toastSlice'
 import { apiRequest } from '@/api/apiClient'
 import { PageHeader } from '@/components/common/PageHeader'
 import { FormImageUpload, FormTextField } from '@/components/forms'
@@ -171,8 +174,8 @@ function SectionTabs({ value, onChange }) {
 }
 
 export default function NewsEventsPage() {
+  const dispatch = useDispatch()
   const [activeTab, setActiveTab] = useState('articles')
-  const [feedback, setFeedback] = useState(null)
   const [dialogState, setDialogState] = useState({ section: 'articles', mode: 'create', open: false, record: null })
   const [deleteConfirm, setDeleteConfirm] = useState({ open: false, section: 'articles', id: null, message: '' })
   
@@ -221,7 +224,6 @@ export default function NewsEventsPage() {
     || updateGalleryItemState.isLoading
 
   const openDialog = (section, mode = 'create', record = null) => {
-    setFeedback(null)
     setDialogState({ section, mode, open: true, record })
   }
 
@@ -316,15 +318,15 @@ export default function NewsEventsPage() {
 
       if (dialogState.mode === 'edit' && dialogState.record) {
         await updateNewsEvent({ id: dialogState.record.id, ...payload }).unwrap()
-        setFeedback({ message: 'News event updated successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'News event updated successfully.', severity: 'success' }))
       } else {
         await createNewsEvent(payload).unwrap()
-        setFeedback({ message: 'News event created successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'News event created successfully.', severity: 'success' }))
       }
 
       closeDialog()
-    } catch (err) {
-      setFeedback({ message: err?.data?.message || 'Failed to save news event.', severity: 'error' })
+    } catch {
+      // Handled globally
     }
   }
 
@@ -339,15 +341,15 @@ export default function NewsEventsPage() {
 
       if (dialogState.mode === 'edit' && dialogState.record) {
         await updateGalleryItem({ id: dialogState.record.id, ...payload }).unwrap()
-        setFeedback({ message: 'Gallery item updated successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Gallery item updated successfully.', severity: 'success' }))
       } else {
         await createGalleryItem(payload).unwrap()
-        setFeedback({ message: 'Gallery item created successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Gallery item created successfully.', severity: 'success' }))
       }
 
       closeDialog()
-    } catch (err) {
-      setFeedback({ message: err?.data?.message || 'Failed to save gallery item.', severity: 'error' })
+    } catch {
+      // Handled globally
     }
   }
 
@@ -365,13 +367,13 @@ export default function NewsEventsPage() {
     try {
       if (section === 'articles') {
         await deleteNewsEvent(id).unwrap()
-        setFeedback({ message: 'News event deleted successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'News event deleted successfully.', severity: 'success' }))
       } else {
         await deleteGalleryItem(id).unwrap()
-        setFeedback({ message: 'Gallery item deleted successfully.', severity: 'success' })
+        dispatch(showToast({ message: 'Gallery item deleted successfully.', severity: 'success' }))
       }
-    } catch (err) {
-      setFeedback({ message: err?.data?.message || `Failed to delete item.`, severity: 'error' })
+    } catch {
+      // Handled globally
     } finally {
       setDeleteConfirm({ open: false, section: 'articles', id: null, message: '' })
     }
@@ -388,17 +390,9 @@ export default function NewsEventsPage() {
         title="News & Events"
       />
 
-      <SectionTabs onChange={(e, val) => { setActiveTab(val); setFeedback(null); }} value={activeTab} />
+      <SectionTabs onChange={(e, val) => setActiveTab(val)} value={activeTab} />
 
-      {feedback ? (
-        <Alert
-          onClose={() => setFeedback(null)}
-          severity={feedback.severity}
-          sx={{ borderRadius: 2, mb: 3 }}
-        >
-          {feedback.message}
-        </Alert>
-      ) : null}
+      {/* Global SnackbarToast handles notifications */}
 
       {activeTab === 'articles' ? (
         <Paper sx={{ borderRadius: 3, overflow: 'hidden' }} variant="outlined">
