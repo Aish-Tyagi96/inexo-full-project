@@ -335,6 +335,7 @@ export default function CatalogPage() {
   const [activeTab, setActiveTab] = useState('categories')
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [feedback, setFeedback] = useState(null)
+  const [dialogError, setDialogError] = useState(null)
   const [dialogState, setDialogState] = useState({ mode: 'create', section: 'categories', open: false, record: null })
   const [deleteConfirm, setDeleteConfirm] = useState({ open: false, type: '', id: null, message: '' })
   const catalogQuery = useGetCatalogTreeQuery()
@@ -416,10 +417,12 @@ export default function CatalogPage() {
 
   const openDialog = (section, mode = 'create', record = null) => {
     setFeedback(null)
+    setDialogError(null)
     setDialogState({ mode, open: true, record, section })
   }
 
   const closeDialog = () => {
+    setDialogError(null)
     setDialogState({ mode: 'create', section: activeTab, open: false, record: null })
     categoryForm.reset({
       name: '',
@@ -560,56 +563,67 @@ export default function CatalogPage() {
   }, [dialogState, productForm])
 
   const handleCreateCategory = async (values) => {
-    const image = await normalizeImageValue(values.image, dialogState.record?.image || '')
-    const carouselImage = await normalizeImageValue(values.carouselImage, dialogState.record?.carouselImage || image)
-    const payload = {
-      name: values.name,
-      description: values.description || '',
-      cardTitle: values.cardTitle || values.name,
-      cardDescription: values.cardDescription || values.description || '',
-      image,
-      carouselImage,
-      carouselText: values.carouselText || values.description || values.name,
-    }
+    setDialogError(null)
+    try {
+      const image = await normalizeImageValue(values.image, dialogState.record?.image || '')
+      const carouselImage = await normalizeImageValue(values.carouselImage, dialogState.record?.carouselImage || image)
+      const payload = {
+        name: values.name,
+        description: values.description || '',
+        cardTitle: values.cardTitle || values.name,
+        cardDescription: values.cardDescription || values.description || '',
+        image,
+        carouselImage,
+        carouselText: values.carouselText || values.description || values.name,
+      }
 
-    if (dialogState.mode === 'edit' && dialogState.record) {
-      await updateCategory({ categoryId: dialogState.record.id, ...payload }).unwrap()
-      setFeedback({ message: 'Category updated successfully.', severity: 'success' })
-    } else {
-      await createCategory(payload).unwrap()
-      setFeedback({ message: 'Category created successfully.', severity: 'success' })
-    }
+      if (dialogState.mode === 'edit' && dialogState.record) {
+        await updateCategory({ categoryId: dialogState.record.id, ...payload }).unwrap()
+        setFeedback({ message: 'Category updated successfully.', severity: 'success' })
+      } else {
+        await createCategory(payload).unwrap()
+        setFeedback({ message: 'Category created successfully.', severity: 'success' })
+      }
 
-    closeDialog()
+      closeDialog()
+    } catch (err) {
+      setDialogError(err?.data?.message || err?.message || 'Failed to save category.')
+    }
   }
 
   const handleCreateSubCategory = async (values) => {
-    const image = await normalizeImageValue(values.image, dialogState.record?.image || '')
-    const carouselImage = await normalizeImageValue(values.carouselImage, dialogState.record?.carouselImage || image)
-    const payload = {
-      categoryId: Number(values.categoryId),
-      name: values.name,
-      description: values.description || '',
-      cardTitle: values.cardTitle || values.name,
-      cardDescription: values.cardDescription || values.description || '',
-      image,
-      carouselImage,
-      carouselText: values.carouselText || values.description || values.name,
-    }
+    setDialogError(null)
+    try {
+      const image = await normalizeImageValue(values.image, dialogState.record?.image || '')
+      const carouselImage = await normalizeImageValue(values.carouselImage, dialogState.record?.carouselImage || image)
+      const payload = {
+        categoryId: Number(values.categoryId),
+        name: values.name,
+        description: values.description || '',
+        cardTitle: values.cardTitle || values.name,
+        cardDescription: values.cardDescription || values.description || '',
+        image,
+        carouselImage,
+        carouselText: values.carouselText || values.description || values.name,
+      }
 
-    if (dialogState.mode === 'edit' && dialogState.record) {
-      await updateSubCategory({ subCategoryId: dialogState.record.id, ...payload }).unwrap()
-      setFeedback({ message: 'Subcategory updated successfully.', severity: 'success' })
-    } else {
-      await createSubCategory(payload).unwrap()
-      setFeedback({ message: 'Subcategory created successfully.', severity: 'success' })
-    }
+      if (dialogState.mode === 'edit' && dialogState.record) {
+        await updateSubCategory({ subCategoryId: dialogState.record.id, ...payload }).unwrap()
+        setFeedback({ message: 'Subcategory updated successfully.', severity: 'success' })
+      } else {
+        await createSubCategory(payload).unwrap()
+        setFeedback({ message: 'Subcategory created successfully.', severity: 'success' })
+      }
 
-    closeDialog()
+      closeDialog()
+    } catch (err) {
+      setDialogError(err?.data?.message || err?.message || 'Failed to save subcategory.')
+    }
   }
 
   const handleCreateProduct = async (values) => {
     productForm.clearErrors(['featureItems', 'benefitItems'])
+    setDialogError(null)
 
     if ((values.featureItems || []).some((item) => !itemHasAtLeastOneText(item))) {
       productForm.setError('featureItems', { type: 'manual', message: 'Each key feature must have at least one text. Title is optional.' })
@@ -621,40 +635,44 @@ export default function CatalogPage() {
       return
     }
 
-    const image = typeof values.image === 'string'
-      ? values.image
-      : await normalizeImageValue(values.image, dialogState.record?.image || '')
-    const carouselImage = await normalizeImageValue(values.carouselImage, dialogState.record?.carouselImage || image)
-    const gallery = values.gallery && typeof values.gallery !== 'string'
-      ? await uploadGalleryFiles(values.gallery)
-      : dialogState.record?.gallery || []
-    const features = normalizeFeatureItems(values.featureItems)
-    const benefits = normalizeBenefitItems(values.benefitItems)
+    try {
+      const image = typeof values.image === 'string'
+        ? values.image
+        : await normalizeImageValue(values.image, dialogState.record?.image || '')
+      const carouselImage = await normalizeImageValue(values.carouselImage, dialogState.record?.carouselImage || image)
+      const gallery = values.gallery && typeof values.gallery !== 'string'
+        ? await uploadGalleryFiles(values.gallery)
+        : dialogState.record?.gallery || []
+      const features = normalizeFeatureItems(values.featureItems)
+      const benefits = normalizeBenefitItems(values.benefitItems)
 
-    const payload = {
-      categoryId: values.categoryId ? Number(values.categoryId) : null,
-      subCategoryId: values.subCategoryId ? Number(values.subCategoryId) : null,
-      name: values.name,
-      description: values.description || '',
-      cardTitle: values.cardTitle || values.name,
-      cardDescription: values.cardDescription || values.description || '',
-      image,
-      carouselImage,
-      carouselDescription: values.carouselDescription || values.description || values.name,
-      gallery,
-      features,
-      benefits,
+      const payload = {
+        categoryId: values.categoryId ? Number(values.categoryId) : null,
+        subCategoryId: values.subCategoryId ? Number(values.subCategoryId) : null,
+        name: values.name,
+        description: values.description || '',
+        cardTitle: values.cardTitle || values.name,
+        cardDescription: values.cardDescription || values.description || '',
+        image,
+        carouselImage,
+        carouselDescription: values.carouselDescription || values.description || values.name,
+        gallery,
+        features,
+        benefits,
+      }
+
+      if (dialogState.mode === 'edit' && dialogState.record) {
+        await updateProduct({ productId: dialogState.record.id, ...payload }).unwrap()
+        setFeedback({ message: 'Product updated successfully.', severity: 'success' })
+      } else {
+        await createProduct(payload).unwrap()
+        setFeedback({ message: 'Product created successfully.', severity: 'success' })
+      }
+
+      closeDialog()
+    } catch (err) {
+      setDialogError(err?.data?.message || err?.message || 'Failed to save product.')
     }
-
-    if (dialogState.mode === 'edit' && dialogState.record) {
-      await updateProduct({ productId: dialogState.record.id, ...payload }).unwrap()
-      setFeedback({ message: 'Product updated successfully.', severity: 'success' })
-    } else {
-      await createProduct(payload).unwrap()
-      setFeedback({ message: 'Product created successfully.', severity: 'success' })
-    }
-
-    closeDialog()
   }
 
   const handleDeleteCategory = (categoryId) => {
@@ -712,6 +730,7 @@ export default function CatalogPage() {
       return (
         <FormProvider {...categoryForm}>
           <Stack component="form" onSubmit={categoryForm.handleSubmit(handleCreateCategory)} spacing={2.5}>
+            {dialogError ? <Alert severity="error">{dialogError}</Alert> : null}
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, md: 6 }}><FormTextField helperText="Slug will be created automatically from the category name." label="Category name" name="name" /></Grid>
               <Grid size={{ xs: 12, md: 6 }}><FormTextField helperText="Shown on category cards. Falls back to the category name." label="Card title" name="cardTitle" /></Grid>
@@ -734,6 +753,7 @@ export default function CatalogPage() {
       return (
         <FormProvider {...subCategoryForm}>
           <Stack component="form" onSubmit={subCategoryForm.handleSubmit(handleCreateSubCategory)} spacing={2.5}>
+            {dialogError ? <Alert severity="error">{dialogError}</Alert> : null}
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, md: 6 }}><FormSelectField label="Category" name="categoryId" options={categoryOptions} /></Grid>
               <Grid size={{ xs: 12, md: 6 }}><FormTextField helperText="Slug will be created automatically from the subcategory name." label="Subcategory name" name="name" /></Grid>
@@ -756,6 +776,7 @@ export default function CatalogPage() {
     return (
       <FormProvider {...productForm}>
         <Stack component="form" onSubmit={productForm.handleSubmit(handleCreateProduct)} spacing={2.5}>
+          {dialogError ? <Alert severity="error">{dialogError}</Alert> : null}
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, md: 6 }}><FormSelectField helperText="Optional for standalone products." label="Category" name="categoryId" options={categoryOptions} /></Grid>
             <Grid size={{ xs: 12, md: 6 }}><FormSelectField helperText="Choose a category first to filter this list." label="Subcategory" name="subCategoryId" options={productSubCategoryOptions} /></Grid>

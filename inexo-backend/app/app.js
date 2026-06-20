@@ -41,6 +41,8 @@ app.use(
   helmet({
     crossOriginResourcePolicy: false,
     contentSecurityPolicy: false,
+    crossOriginOpenerPolicy: false,
+    originAgentCluster: false,
   }),
 );
 app.use(hpp());
