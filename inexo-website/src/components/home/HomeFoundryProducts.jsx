@@ -16,7 +16,7 @@ export function HomeFoundryProducts() {
           <h2 className="type-4 mt-8">Foundry Products</h2>
 
           <div className="relative mx-auto mt-6 max-w-[980px]">
-            <p className="type-5 mx-auto max-w-[730px] bg-white px-4 text-center text-[16px] leading-[1.7] text-[#4b4b4b] sm:text-[17px] lg:px-12">
+            <p className="type-5 w-full bg-white text-center text-[16px] leading-[1.7] text-[#4b4b4b] sm:text-[17px]">
               INEXO&apos;s products are used for making castings in a wide range of metals and alloys. These castings
               cover a wide range of applications like automotive, earthmoving, railways, petrochemicals,
               infrastructure, wind energy and power plants.

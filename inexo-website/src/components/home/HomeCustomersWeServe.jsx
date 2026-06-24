@@ -16,7 +16,7 @@ const customers = [
 
 export function HomeCustomersWeServe() {
   return (
-    <section className="bg-white py-12 md:py-20 lg:py-[100px]">
+    <section className="bg-surface-page py-12 md:py-20 lg:py-[100px]">
       <Container>
         <div className="flex flex-col items-center">
           {/* <SectionLabel>Our Clients</SectionLabel> */}

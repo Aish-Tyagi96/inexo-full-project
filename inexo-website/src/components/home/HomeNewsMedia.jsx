@@ -34,14 +34,14 @@ export function HomeNewsMedia() {
                 Center
               </h2>
 
-              <p className="mt-8 type-3 w-full text-center lg:mt-[42px] max-[1399px]:mx-auto max-[1399px]:w-[50%] min-[1400px]:w-[70%]">
+              <p className="mt-8 news-panel-description w-full text-center lg:mt-[42px] max-[1399px]:mx-auto max-[1399px]:w-[50%] min-[1400px]:w-[70%]">
                 Stay updated with the latest news, milestones, and industry developments from INEXO Metal Casts.
               </p>
             </div>
           </div>
 
           <div className="w-full">
-            <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-2 min-[1400px]:max-w-[920px]">
+            <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-2">
               {latestEvents.map((item) => (
                 <NewsMediaCard
                   key={item.id}

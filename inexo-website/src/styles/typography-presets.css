@@ -213,11 +213,22 @@
 .nav-menu-item-text,
 .type-nav-menu {
   color: var(--color-text-primary);
-  font-family: var(--font-family-display-serif);
+  font-family: var(--font-family-navigation-menu);
   font-size: var(--font-size-navigation-menu);
   font-style: normal;
   font-weight: var(--font-weight-navigation-menu);
   line-height: var(--line-height-navigation-menu);
+}
+
+.nav-menu-item-text.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-color: #FFB400;
+  border-radius: 9999px;
 }
 
 .section-label-text,
@@ -408,5 +419,14 @@
   font-style: normal;
   font-weight: var(--font-weight-faq-question);
   line-height: var(--line-height-faq-question);
+}
+
+.news-panel-description {
+  color: var(--color-neutral-black);
+  font-family: var(--font-family-primary-sans);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 

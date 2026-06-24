@@ -11,7 +11,7 @@ const icons = {
 export function PurposeInfoCard({ icon, title, children, className = '' }) {
   return (
     <article
-      className={`flex w-full flex-col gap-5 rounded-[15px] bg-[rgba(0,48,122,0.03)] px-5 py-6 sm:flex-row sm:gap-8 sm:px-8 sm:py-8 lg:max-w-[1000px] lg:px-[56px] lg:py-[48px] ${className}`.trim()}
+      className={`flex w-full flex-col gap-5 rounded-[15px] bg-white px-5 py-6 sm:flex-row sm:gap-8 sm:px-8 sm:py-8 lg:max-w-[1000px] lg:px-[56px] lg:py-[48px] ${className}`.trim()}
     >
       <div className="flex h-[101px] w-[101px] shrink-0 items-center justify-center rounded-full bg-[rgba(0,48,122,0.12)]">
         <img alt="" aria-hidden="true" className="aspect-square h-12 w-12 object-contain" src={icons[icon]} />

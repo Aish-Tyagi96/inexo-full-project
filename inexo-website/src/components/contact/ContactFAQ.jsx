@@ -47,7 +47,7 @@ export function ContactFAQ() {
       <Container>
         {/* Eyebrow Label */}
         <div className="mb-6">
-          <SectionLabel textClassName="text-[#00307a] font-sans font-bold text-[14px] uppercase tracking-wider">
+          <SectionLabel textClassName="text-[#00307a] font-sans font-bold text-[14px] tracking-wider">
             Need Help?
           </SectionLabel>
         </div>
@@ -64,11 +64,10 @@ export function ContactFAQ() {
             return (
               <div
                 key={item.id}
-                className={`bg-[#FFFDF9] border border-[#f5edd6]/80 transition-all duration-300 ${
-                  isOpen
+                className={`bg-[#FFFDF9] border border-[#f5edd6]/80 transition-all duration-300 ${isOpen
                     ? 'rounded-[28px] p-6 sm:p-8'
                     : 'rounded-[100px] px-6 py-4 sm:px-8 sm:py-5'
-                }`}
+                  }`}
               >
                 {/* Accordion Header */}
                 <button
@@ -82,9 +81,8 @@ export function ContactFAQ() {
                   </span>
                   <span className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200">
                     <svg
-                      className={`h-5 w-5 sm:h-6 sm:w-6 text-[#00307a] transition-transform duration-300 ${
-                        isOpen ? 'rotate-180' : 'rotate-0'
-                      }`}
+                      className={`h-5 w-5 sm:h-6 sm:w-6 text-[#00307a] transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'
+                        }`}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -98,9 +96,8 @@ export function ContactFAQ() {
                 {/* Accordion Content */}
                 <div
                   id={`faq-answer-${item.id}`}
-                  className={`grid transition-all duration-300 ease-in-out ${
-                    isOpen ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0'
-                  }`}
+                  className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0'
+                    }`}
                 >
                   <div className="overflow-hidden">
                     <p className="text-[14px] sm:text-[16px] lg:text-[17px] leading-relaxed text-[#2A2A2A] font-sans">

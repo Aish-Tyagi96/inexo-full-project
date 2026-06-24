@@ -855,7 +855,7 @@ export default function CatalogPage() {
   return (
     <Box>
       <PageHeader
-        description="Manage the product catalog in an Ethiraj-style admin workflow: section tabs, table views, and modal create or edit forms."
+        description="Manage the product catalog: section tabs, table views, and modal create or edit forms."
         eyebrow="Catalog"
         title="Product Catalog"
       />
@@ -866,7 +866,7 @@ export default function CatalogPage() {
         <Stack direction={{ xs: 'column', md: 'row' }} justifyContent="space-between" spacing={2.5} sx={{ mb: 3 }}>
           <Box>
             <Typography color="text.primary" fontSize="2rem" fontWeight={700} sx={{ mb: 0.5 }}>{activeTitle}</Typography>
-            <Typography color="text.secondary">Manage {activeTitle.toLowerCase()} with the same table-first workflow used in the Ethiraj content admin screens.</Typography>
+            <Typography color="text.secondary">Manage {activeTitle.toLowerCase()} using the table-first workflow.</Typography>
           </Box>
           <Button
             onClick={() => openDialog(activeTab, 'create')}

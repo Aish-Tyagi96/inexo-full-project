@@ -1,29 +1,31 @@
 import { useEffect, useState } from 'react'
 import heroPoster from '@/assets/hero.png'
 import heroArrowRight from '@/assets/images/home/heroarrow-right.svg'
-import facilityImage from '@/assets/images/home/who-we-are-facility.png'
+import homebanner1 from '@/assets/images/home/homebanner1.png'
+import homebanner2 from '@/assets/images/home/homebanner2.png'
+import homebanner3 from '@/assets/images/home/homebanner3.png'
 
 const defaultSlides = [
   {
     id: 1,
-    title: 'Leading Foundry Feeding Systems Manufacturers',
+    title: 'Among the World’s Leading Foundry Manufacturers',
     ctaLabel: 'Watch Our Video',
     videoSrc: '/videos/INEXO_COMPANY VIDEO_27_01_2026.mp4',
-    poster: facilityImage,
+    poster: homebanner1,
   },
   {
     id: 2,
-    title: 'Precision Solutions For Modern Foundry Operations',
-    // ctaLabel: 'Watch Our Video',
-    imageSrc: facilityImage,
+    title: 'Engineering Excellence Driving Modern Foundries Worldwide @ INEXO',
+    ctaLabel: ' Our Event Video',
+    imageSrc: homebanner2,
   },
   {
     id: 3,
-    title: 'Reliable Engineering Backed By Proven Performance',
-    // ctaLabel: 'Watch Our Video',
+    title: 'Caring for Communities. Committed to Sustainability.',
+    ctaLabel: 'Learn More',
     // videoSrc: '/videos/inexo-foundry-3.mp4',
     // poster: heroPoster,
-    imageSrc: facilityImage,
+    imageSrc: homebanner3,
   },
 ]
 
@@ -32,6 +34,7 @@ export function Hero({ slides = defaultSlides }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [videoError, setVideoError] = useState(false)
   const [direction, setDirection] = useState('next')
+  const [isPlayingVideo, setIsPlayingVideo] = useState(false)
 
   useEffect(() => {
     if (currentIndex >= heroSlides.length) {
@@ -40,6 +43,12 @@ export function Hero({ slides = defaultSlides }) {
   }, [currentIndex, heroSlides.length])
 
   useEffect(() => {
+    setIsPlayingVideo(false)
+  }, [currentIndex])
+
+  useEffect(() => {
+    if (isPlayingVideo) return
+
     const timer = window.setInterval(() => {
       setCurrentIndex((value) => (value + 1) % heroSlides.length)
       setDirection('next')
@@ -47,7 +56,7 @@ export function Hero({ slides = defaultSlides }) {
     }, 7000)
 
     return () => window.clearInterval(timer)
-  }, [heroSlides.length])
+  }, [heroSlides.length, isPlayingVideo])
 
   const currentSlide = heroSlides[currentIndex]
 
@@ -80,7 +89,7 @@ export function Hero({ slides = defaultSlides }) {
                 className="absolute inset-0 h-full w-full object-cover"
                 src={currentSlide.imageSrc}
               />
-            ) : !videoError ? (
+            ) : currentSlide.videoSrc && isPlayingVideo && !videoError ? (
               <video
                 autoPlay
                 className="absolute inset-0 h-full w-full object-cover"
@@ -114,9 +123,14 @@ export function Hero({ slides = defaultSlides }) {
                 <div className="mt-8 flex items-center gap-5">
                   <button
                     className="button-label-primary min-h-[48px] rounded-[100px] bg-brand-accent-yellow px-5 py-3 transition-colors duration-200 hover:bg-[#ffc933] sm:min-h-[56px] sm:px-7 sm:py-3.5 lg:min-h-[clamp(56px,4.4vw,76px)] lg:h-auto lg:min-w-[clamp(190px,15.3vw,263px)] lg:px-6 lg:py-3"
+                    onClick={() => {
+                      if (currentSlide.videoSrc) {
+                        setIsPlayingVideo((prev) => !prev)
+                      }
+                    }}
                     type="button"
                   >
-                    {currentSlide.ctaLabel}
+                    {currentSlide.videoSrc && isPlayingVideo ? 'Pause Video' : currentSlide.ctaLabel}
                   </button>
                 </div>
               ) : null}
@@ -138,11 +152,10 @@ export function Hero({ slides = defaultSlides }) {
                 {heroSlides.map((slide, index) => (
                   <button
                     aria-label={`Go to slide ${index + 1}`}
-                    className={`rounded-full transition-all duration-200 cursor-pointer ${
-                      index === currentIndex
-                        ? 'h-[10px] w-[28px] bg-[#FFB400] sm:h-[12px] sm:w-[34px] lg:h-[14px] lg:w-[39.5px]'
-                        : 'h-[10px] w-[10px] bg-white/85 sm:h-[12px] sm:w-[12px] lg:h-[15px] lg:w-[15px]'
-                    }`}
+                    className={`rounded-full transition-all duration-200 cursor-pointer ${index === currentIndex
+                      ? 'h-[10px] w-[28px] bg-[#FFB400] sm:h-[12px] sm:w-[34px] lg:h-[14px] lg:w-[39.5px]'
+                      : 'h-[10px] w-[10px] bg-white/85 sm:h-[12px] sm:w-[12px] lg:h-[15px] lg:w-[15px]'
+                      }`}
                     key={slide.id}
                     onClick={() => goToSlide(index)}
                     type="button"

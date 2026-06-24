@@ -53,7 +53,7 @@ const purposeItems = [
 
 export function HomePurpose() {
   return (
-    <section className="bg-white py-16 sm:py-20 lg:py-[120px]">
+    <section className="bg-surface-page py-16 sm:py-20 lg:py-[120px]">
       <Container>
         <div className="text-center">
           <SectionLabel className="mx-auto">Our Purpose</SectionLabel>

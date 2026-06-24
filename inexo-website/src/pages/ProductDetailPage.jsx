@@ -160,11 +160,6 @@ export default function ProductDetailPage() {
             <p className="mx-auto mt-8 w-full max-w-[991px] text-[16px] leading-[1.65] text-[#2A2A2A] sm:text-[18px]">
               {product.description}
             </p>
-            {category || subCategory ? (
-              <p className="mx-auto mt-4 w-full max-w-[991px] text-[14px] font-medium uppercase tracking-[0.08em] text-[#5872A1] sm:text-[15px]">
-                {[category?.name, subCategory?.name].filter(Boolean).join(' / ')}
-              </p>
-            ) : null}
           </div>
         </Container>
       </section>
@@ -172,14 +167,14 @@ export default function ProductDetailPage() {
       <section className="bg-white py-16 sm:py-20 lg:py-[120px]">
         <Container>
           <div className="grid gap-10 md:grid-cols-2 md:gap-12">
-            <div>
+            <div className="rounded-[40px] bg-[rgba(0,48,122,0.03)] pl-10 pr-8 py-10 lg:pl-20 lg:pr-12 lg:py-12">
               <h3 className="solutions-category-title">Key Features:</h3>
               <div className="mt-5">
                 {renderOptionList(keyFeatureItems)}
               </div>
             </div>
 
-            <div className="md:border-l md:border-[#C9D1E2] md:pl-10 lg:pl-14">
+            <div className="rounded-[40px] bg-[rgba(0,48,122,0.03)] pl-10 pr-8 py-10 lg:pl-20 lg:pr-12 lg:py-12">
               <h3 className="solutions-category-title">Typical Benefits:</h3>
               <div className="mt-5">
                 {renderOptionList(typicalBenefitItems)}

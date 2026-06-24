@@ -102,13 +102,14 @@
   --line-height-button-primary: normal;
   --font-weight-button-primary: 700;
 
+  --font-family-navigation-menu: ".SF Compact", var(--font-family-primary-sans);
   --font-size-navigation-menu: 24px;
   --line-height-navigation-menu: normal;
+  --font-weight-navigation-menu: 457;
 
   --font-size-hero-title-on-light: 64px;
   --line-height-hero-title-on-light: 84px;
   --font-weight-hero-title-on-light: 700;
-  --font-weight-navigation-menu: 457;
 
   --font-family-search-input: var(--font-family-primary-sans);
   --font-size-search-input: 18px;

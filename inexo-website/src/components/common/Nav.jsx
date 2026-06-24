@@ -17,6 +17,9 @@ export function Nav() {
   const navListRef = useRef(null)
   const linkRefs = useRef({})
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 })
+  const [hoveredPath, setHoveredPath] = useState(null)
+
+  const targetPath = hoveredPath
 
   useEffect(() => {
     setMenuOpen(false)
@@ -25,7 +28,7 @@ export function Nav() {
   useEffect(() => {
     const updateIndicator = () => {
       const activeItem = navItems.find((item) => (
-        item.path && (pathname === item.path || pathname.startsWith(`${item.path}/`))
+        item.path && targetPath && (targetPath === item.path || targetPath.startsWith(`${item.path}/`))
       ))
 
       if (!activeItem?.path || !navListRef.current) {
@@ -63,7 +66,7 @@ export function Nav() {
       window.removeEventListener('resize', updateIndicator)
       clearTimeout(timer)
     }
-  }, [pathname])
+  }, [targetPath])
 
   return (
     <header className="relative z-50 border-b border-[#d8d8d8] bg-[#f5f5f5]">
@@ -83,20 +86,25 @@ export function Nav() {
                 opacity: indicatorStyle.opacity,
               }}
             />
-            <ul className="flex items-center gap-[28px] md:gap-[34px] lg:gap-[45px] xl:gap-[56px] 2xl:gap-[76px]" ref={navListRef}>
+            <ul 
+              className="flex items-center gap-[28px] md:gap-[34px] lg:gap-[45px] xl:gap-[56px] 2xl:gap-[76px]" 
+              ref={navListRef}
+              onMouseLeave={() => setHoveredPath(null)}
+            >
             {navItems.map((item) => (
               <li key={item.label}>
                 {item.path ? (
                   <NavLink
                     className={({ isActive }) =>
                       `nav-menu-item-text relative inline-flex h-[82px] items-center transition-[color,opacity] duration-200 hover:opacity-70 sm:h-[96px] lg:h-[126px] ${
-                        isActive ? 'text-brand-blue' : ''
+                        isActive ? 'text-brand-blue is-active' : ''
                       }`
                     }
                     ref={(element) => {
                       linkRefs.current[item.path] = element
                     }}
                     to={item.path}
+                    onMouseEnter={() => setHoveredPath(item.path)}
                   >
                     {item.label}
                   </NavLink>

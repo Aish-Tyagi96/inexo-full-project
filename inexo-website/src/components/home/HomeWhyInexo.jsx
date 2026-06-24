@@ -91,11 +91,9 @@ function RatingCard({ className = '', showArrow = true }) {
           Across by customers touch points
         </p>
 
-        <ul className="mt-5 space-y-2 font-['IBM_Plex_Sans'] text-[13px] font-medium leading-tight text-brand-blue lg:text-[14px]">
-          {ratingPoints.map((point) => (
-            <li key={point}>{point}</li>
-          ))}
-        </ul>
+        <p className="mt-5 font-['IBM_Plex_Sans'] text-[13px] font-medium leading-relaxed text-brand-blue lg:text-[14px]">
+          {ratingPoints.join(', ')}
+        </p>
       </div>
     </article>
   )
@@ -132,7 +130,7 @@ export function HomeWhyInexo() {
         <div className="relative mx-auto mt-16 hidden lg:block lg:h-[420px] xl:h-[500px] w-full max-w-[960px] xl:max-w-[1120px]">
           {/* Left Card */}
           <RetentionCard 
-            className="absolute lg:left-0 lg:top-0 lg:w-[400px] lg:h-[220px] lg:pr-[90px] xl:w-[470px] xl:h-[248px] xl:pr-[120px] z-[1]" 
+            className="absolute lg:left-0 lg:top-0 lg:w-[400px] lg:h-[220px] lg:pr-[190px] xl:w-[470px] xl:h-[248px] xl:pr-[220px] z-[1]" 
             showArrow={false} 
           />
 
@@ -142,7 +140,7 @@ export function HomeWhyInexo() {
           >
             <ArrowBadge 
               direction="right" 
-              className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[5]" 
+              className="absolute left-0 -ml-[56px] top-1/2 -translate-y-1/2 z-[5]" 
             />
           </RetentionStat>
 
@@ -152,13 +150,13 @@ export function HomeWhyInexo() {
           >
             <ArrowBadge 
               direction="left" 
-              className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 z-[5]" 
+              className="absolute right-0 -mr-[56px] top-1/2 -translate-y-1/2 z-[5]" 
             />
           </RatingStat>
 
           {/* Right Card */}
           <RatingCard 
-            className="absolute lg:right-0 lg:top-[175px] lg:w-[440px] lg:h-[220px] lg:pl-[110px] xl:top-[205px] xl:w-[500px] xl:h-[248px] xl:pl-[128px] pr-8 z-[2]" 
+            className="absolute lg:right-0 lg:top-[175px] lg:w-[440px] lg:h-[220px] lg:pl-[160px] xl:top-[205px] xl:w-[500px] xl:h-[248px] xl:pl-[176px] pr-8 z-[2]" 
             showArrow={false} 
           />
         </div>

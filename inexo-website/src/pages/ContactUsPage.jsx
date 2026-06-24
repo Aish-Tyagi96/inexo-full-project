@@ -29,9 +29,9 @@ export default function ContactUsPage() {
     <>
       <Hero slides={contactHeroSlides} />
       <ContactFormSection />
+      <ContactFAQ />
       <ContactMapSection />
       <ContactDistributorsSection />
-      <ContactFAQ />
     </>
   )
 }
