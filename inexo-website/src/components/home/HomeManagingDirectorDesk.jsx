@@ -1,7 +1,7 @@
 import oldManImage from '@/assets/images/home/old_man.png'
 
 const messageParagraphs = [
-  'At INEXO Metal Casts, excellence is a continuous journey driven by passion, precision, and purpose. Our evolution from humble beginnings to a trusted industry name has been shaped by innovation, customer trust, and an unwavering commitment to quality.',
+  'At INEXO Cast Metal, excellence is a continuous journey driven by passion, precision, and purpose. Our evolution from humble beginnings to a trusted industry name has been shaped by innovation, customer trust, and an unwavering commitment to quality.',
   'By embracing advanced technologies, strengthening operational excellence, and staying true to our core values, we deliver world-class casting solutions across industries. As we move forward, our focus remains on setting new benchmarks and building enduring global partnerships, together shaping the future.',
 ]
 

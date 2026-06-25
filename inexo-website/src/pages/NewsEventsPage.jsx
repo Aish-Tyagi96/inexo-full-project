@@ -73,7 +73,7 @@ export default function NewsEventsPage() {
             <SectionLabel>From News</SectionLabel>
             <h2 className="type-2 mt-6 mb-5">Events, Updates & CSR Programs</h2>
             <p className="text-[16px] sm:text-[17px] leading-[1.7] text-[#4b4b4b] max-w-[980px]">
-              Stay updated with the latest happenings at INEXO Metal Casts. Our News & Events section highlights important company milestones, industry participation, product developments, exhibitions, and corporate initiatives. Through this section, we share updates on our achievements, collaborations, CSR initiatives, and events that reflect our commitment to excellence, innovation, and responsible corporate growth.
+              Stay updated with the latest happenings at INEXO Cast Metal. Our News & Events section highlights important company milestones, industry participation, product developments, exhibitions, and corporate initiatives. Through this section, we share updates on our achievements, collaborations, CSR initiatives, and events that reflect our commitment to excellence, innovation, and responsible corporate growth.
             </p>
           </div>
 
