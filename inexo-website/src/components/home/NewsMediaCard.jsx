@@ -1,5 +1,35 @@
 import cardRightArrow from '@/assets/images/home/card-right-arrow.svg'
 
+function formatDate(dateStr) {
+  if (!dateStr) return ''
+
+  // Match YYYY-MM-DD
+  const ymdMatch = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/)
+  if (ymdMatch) {
+    const [_, year, month, day] = ymdMatch
+    return `${day}/${month}/${year}`
+  }
+
+  // Fallback for other formats
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+    return dateStr
+  }
+
+  try {
+    const parsedDate = new Date(dateStr)
+    if (!isNaN(parsedDate.getTime())) {
+      const day = String(parsedDate.getDate()).padStart(2, '0')
+      const month = String(parsedDate.getMonth() + 1).padStart(2, '0')
+      const year = parsedDate.getFullYear()
+      return `${day}/${month}/${year}`
+    }
+  } catch (e) {
+    // Ignore and fallback
+  }
+
+  return dateStr
+}
+
 export function NewsMediaCard({ image, imageAlt, title, description, date, readMoreHref = '#', onClick }) {
   const handleReadMoreClick = (e) => {
     if (onClick) {
@@ -25,7 +55,7 @@ export function NewsMediaCard({ image, imageAlt, title, description, date, readM
       </p>
 
       <div className="mt-5 flex items-center justify-between gap-4 pt-1 lg:mt-6">
-        <span className="news-media-card-date">{date}</span>
+        <span className="news-media-card-date">{formatDate(date)}</span>
 
         <a className="inline-flex items-center gap-5 cursor-pointer transition-opacity duration-200 hover:opacity-80" href={readMoreHref} onClick={handleReadMoreClick}>
           <span className="news-media-card-read-more">Read More</span>

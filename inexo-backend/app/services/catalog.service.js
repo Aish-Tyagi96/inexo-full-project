@@ -397,12 +397,51 @@ async function upsertSubCategory(payload, subCategoryId) {
   });
 }
 
+async function generateUniqueProductSlug(name, subCategoryId, productId, customSlug, transaction) {
+  let baseSlug = customSlug?.trim() || slugify(name);
+
+  if (!customSlug && subCategoryId) {
+    const subCategory = await db.ProductSubCategory.findOne({
+      where: { sub_category_id: subCategoryId, delete_status: 0 },
+      transaction,
+    });
+    if (subCategory) {
+      baseSlug = slugify(`${subCategory.name} ${name}`);
+    }
+  }
+
+  let slug = baseSlug;
+  let counter = 1;
+  while (true) {
+    const whereClause = {
+      slug,
+      delete_status: 0,
+    };
+    if (productId) {
+      whereClause.product_id = { [Op.ne]: productId };
+    }
+    const existing = await db.Product.findOne({
+      where: whereClause,
+      transaction,
+    });
+    if (!existing) {
+      break;
+    }
+    slug = `${baseSlug}-${counter}`;
+    counter++;
+  }
+  return slug;
+}
+
 async function upsertProduct(payload, productId) {
   return db.sequelize.transaction(async (transaction) => {
     await ensureCategoryExists(payload.categoryId, transaction);
     await ensureSubCategoryExists(payload.subCategoryId, payload.categoryId, transaction);
-    const values = normalizeProductPayload(payload);
+    
     let product = null;
+    let oldSlug = null;
+    let oldName = null;
+    let oldSubCategoryId = null;
 
     if (productId) {
       product = await db.Product.findOne({
@@ -413,7 +452,26 @@ async function upsertProduct(payload, productId) {
       if (!product) {
         throw createHttpError(StatusCode.NOT_FOUND.code, 'Product not found.');
       }
+      oldSlug = product.slug;
+      oldName = product.name;
+      oldSubCategoryId = product.sub_category_id;
+    }
 
+    const values = normalizeProductPayload(payload);
+
+    if (productId && oldSlug && values.name.toLowerCase() === oldName.toLowerCase() && values.sub_category_id === oldSubCategoryId) {
+      values.slug = oldSlug;
+    } else {
+      values.slug = await generateUniqueProductSlug(
+        payload.name,
+        payload.subCategoryId,
+        productId,
+        payload.slug,
+        transaction
+      );
+    }
+
+    if (productId) {
       await product.update(values, { transaction });
     } else {
       product = await db.Product.create(values, { transaction });

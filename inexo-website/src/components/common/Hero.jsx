@@ -47,7 +47,7 @@ export function Hero({ slides = defaultSlides }) {
   }, [currentIndex])
 
   useEffect(() => {
-    if (isPlayingVideo) return
+    if (isPlayingVideo || heroSlides.length <= 1) return
 
     const timer = window.setInterval(() => {
       setCurrentIndex((value) => (value + 1) % heroSlides.length)
@@ -90,7 +90,7 @@ export function Hero({ slides = defaultSlides }) {
                 src={currentSlide.imageSrc}
               />
             ) : currentSlide.videoSrc && isPlayingVideo && !videoError ? (
-              <video
+               <video
                 autoPlay
                 className="absolute inset-0 h-full w-full object-cover"
                 loop
@@ -136,44 +136,46 @@ export function Hero({ slides = defaultSlides }) {
               ) : null}
             </div>
 
-            <div className="absolute bottom-5 right-4 flex items-center gap-3 sm:bottom-7 sm:right-8 sm:gap-5 lg:bottom-11 lg:right-35 lg:gap-8 min-[1728px]:gap-[21px]">
-              <button
-                aria-label="Previous slide"
-                className="grid h-[40px] w-[40px] place-items-center rounded-l-[6px] bg-white font-semibold leading-none text-[#0a2d57] cursor-pointer sm:h-[46px] sm:w-[47px] lg:h-[52px] lg:w-[53px]"
-                onClick={goToPrevious}
-                type="button"
-              >
-                <span className="inline-flex h-[40px] w-[40px] items-center justify-center sm:h-[46px] sm:w-[47px] lg:h-[52px] lg:w-[53px]">
-                  <img alt="" aria-hidden="true" className="h-[16px] w-[8px] rotate-180 object-contain sm:h-[18px] sm:w-[9px] lg:h-[20px] lg:w-[10px]" src={heroArrowRight} />
-                </span>
-              </button>
+            {heroSlides.length > 1 && (
+              <div className="absolute bottom-5 right-4 flex items-center gap-3 sm:bottom-7 sm:right-8 sm:gap-5 lg:bottom-11 lg:right-35 lg:gap-8 min-[1728px]:gap-[21px]">
+                <button
+                  aria-label="Previous slide"
+                  className="grid h-[40px] w-[40px] place-items-center rounded-l-[6px] bg-white font-semibold leading-none text-[#0a2d57] cursor-pointer sm:h-[46px] sm:w-[47px] lg:h-[52px] lg:w-[53px]"
+                  onClick={goToPrevious}
+                  type="button"
+                >
+                  <span className="inline-flex h-[40px] w-[40px] items-center justify-center sm:h-[46px] sm:w-[47px] lg:h-[52px] lg:w-[53px]">
+                    <img alt="" aria-hidden="true" className="h-[16px] w-[8px] rotate-180 object-contain sm:h-[18px] sm:w-[9px] lg:h-[20px] lg:w-[10px]" src={heroArrowRight} />
+                  </span>
+                </button>
 
-              <div className="flex items-center gap-[6px] sm:gap-[8px]">
-                {heroSlides.map((slide, index) => (
-                  <button
-                    aria-label={`Go to slide ${index + 1}`}
-                    className={`rounded-full transition-all duration-200 cursor-pointer ${index === currentIndex
-                      ? 'h-[10px] w-[28px] bg-[#FFB400] sm:h-[12px] sm:w-[34px] lg:h-[14px] lg:w-[39.5px]'
-                      : 'h-[10px] w-[10px] bg-white/85 sm:h-[12px] sm:w-[12px] lg:h-[15px] lg:w-[15px]'
-                      }`}
-                    key={slide.id}
-                    onClick={() => goToSlide(index)}
-                    type="button"
-                  />
-                ))}
+                <div className="flex items-center gap-[6px] sm:gap-[8px]">
+                  {heroSlides.map((slide, index) => (
+                    <button
+                      aria-label={`Go to slide ${index + 1}`}
+                      className={`rounded-full transition-all duration-200 cursor-pointer ${index === currentIndex
+                        ? 'h-[10px] w-[28px] bg-[#FFB400] sm:h-[12px] sm:w-[34px] lg:h-[14px] lg:w-[39.5px]'
+                        : 'h-[10px] w-[10px] bg-white/85 sm:h-[12px] sm:w-[12px] lg:h-[15px] lg:w-[15px]'
+                        }`}
+                      key={slide.id}
+                      onClick={() => goToSlide(index)}
+                      type="button"
+                    />
+                  ))}
+                </div>
+
+                <button
+                  aria-label="Next slide"
+                  className="grid h-[40px] w-[40px] place-items-center rounded-r-[6px] bg-[#FFB400] font-semibold leading-none text-[#0a2d57] cursor-pointer sm:h-[46px] sm:w-[47px] lg:h-[52px] lg:w-[53px]"
+                  onClick={goToNext}
+                  type="button"
+                >
+                  <span className="inline-flex h-[40px] w-[40px] items-center justify-center sm:h-[46px] sm:w-[47px] lg:h-[52px] lg:w-[53px]">
+                    <img alt="" aria-hidden="true" className="h-[16px] w-[8px] object-contain sm:h-[18px] sm:w-[9px] lg:h-[20px] lg:w-[10px]" src={heroArrowRight} />
+                  </span>
+                </button>
               </div>
-
-              <button
-                aria-label="Next slide"
-                className="grid h-[40px] w-[40px] place-items-center rounded-r-[6px] bg-[#FFB400] font-semibold leading-none text-[#0a2d57] cursor-pointer sm:h-[46px] sm:w-[47px] lg:h-[52px] lg:w-[53px]"
-                onClick={goToNext}
-                type="button"
-              >
-                <span className="inline-flex h-[40px] w-[40px] items-center justify-center sm:h-[46px] sm:w-[47px] lg:h-[52px] lg:w-[53px]">
-                  <img alt="" aria-hidden="true" className="h-[16px] w-[8px] object-contain sm:h-[18px] sm:w-[9px] lg:h-[20px] lg:w-[10px]" src={heroArrowRight} />
-                </span>
-              </button>
-            </div>
+            )}
           </div>
         </div>
       </div>

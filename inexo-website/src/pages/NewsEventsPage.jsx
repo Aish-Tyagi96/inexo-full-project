@@ -8,25 +8,25 @@ import { NewsMediaCard } from '@/components/home/NewsMediaCard'
 import { NewsEventsGallery } from '@/components/newsEvents/NewsEventsGallery'
 import { EventDetailModal } from '@/components/newsEvents/EventDetailModal'
 
-import facilityImage from '@/assets/images/home/who-we-are-facility.png'
+import homebanner1 from '@/assets/images/home/homebanner1.png'
 
 const newsEventSlides = [
   {
     id: 1,
-    title: 'Latest News & Events from INEXO Metal Casts',
+    title: 'Among the World’s Leading Risering Products Manufacturers',
     ctaLabel: 'Explore Updates',
-    imageSrc: facilityImage,
+    imageSrc: homebanner1,
   },
-  {
-    id: 2,
-    title: 'Industry Events & Corporate Updates',
-    imageSrc: facilityImage,
-  },
-  {
-    id: 3,
-    title: 'Stay Connected With Our Community',
-    imageSrc: facilityImage,
-  },
+  // {
+  //   id: 2,
+  //   title: 'Industry Events & Corporate Updates',
+  //   imageSrc: facilityImage,
+  // },
+  // {
+  //   id: 3,
+  //   title: 'Stay Connected With Our Community',
+  //   imageSrc: facilityImage,
+  // },
 ]
 
 export default function NewsEventsPage() {

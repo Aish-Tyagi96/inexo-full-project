@@ -113,7 +113,7 @@ export function ContactFormSection() {
                 {/* First Name & Last Name */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="firstName">
+                    <label className="block form-label text-gray-700 mb-2" htmlFor="firstName">
                       First Name<span className="text-red-500">*</span>
                     </label>
                     <input
@@ -130,7 +130,7 @@ export function ContactFormSection() {
                   </div>
 
                   <div>
-                    <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="lastName">
+                    <label className="block form-label text-gray-700 mb-2" htmlFor="lastName">
                       Last Name<span className="text-red-500">*</span>
                     </label>
                     <input
@@ -149,7 +149,7 @@ export function ContactFormSection() {
 
                 {/* Organization Name */}
                 <div>
-                  <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="organizationName">
+                  <label className="block form-label text-gray-700 mb-2" htmlFor="organizationName">
                     Organization Name<span className="text-red-500">*</span>
                   </label>
                   <input
@@ -167,7 +167,7 @@ export function ContactFormSection() {
 
                 {/* Select Category */}
                 <div>
-                  <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="category">
+                  <label className="block form-label text-gray-700 mb-2" htmlFor="category">
                     Select Category<span className="text-red-500">*</span>
                   </label>
                   <select
@@ -196,7 +196,7 @@ export function ContactFormSection() {
 
                 {/* Select Sub Category */}
                 <div>
-                  <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="subCategory">
+                  <label className="block form-label text-gray-700 mb-2" htmlFor="subCategory">
                     Select Sub Category{hasSubCategories && <span className="text-red-500">*</span>}
                   </label>
                   <select
@@ -232,7 +232,7 @@ export function ContactFormSection() {
 
                 {/* Select Product */}
                 <div>
-                  <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="product">
+                  <label className="block form-label text-gray-700 mb-2" htmlFor="product">
                     Select Product<span className="text-red-500">*</span>
                   </label>
                   <select
@@ -263,7 +263,7 @@ export function ContactFormSection() {
                 {/* Preferred Date & Time */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="preferredDate">
+                    <label className="block form-label text-gray-700 mb-2" htmlFor="preferredDate">
                       Preferred Date
                     </label>
                     <input
@@ -275,7 +275,7 @@ export function ContactFormSection() {
                   </div>
 
                   <div>
-                    <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="preferredTime">
+                    <label className="block form-label text-gray-700 mb-2" htmlFor="preferredTime">
                       Preferred Time
                     </label>
                     <select
@@ -299,7 +299,7 @@ export function ContactFormSection() {
 
                 {/* Mobile Number */}
                 <div>
-                  <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="mobileNumber">
+                  <label className="block form-label text-gray-700 mb-2" htmlFor="mobileNumber">
                     Mobile Number<span className="text-red-500">*</span>
                   </label>
                   <input
@@ -323,7 +323,7 @@ export function ContactFormSection() {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-[14px] font-semibold text-gray-700 mb-2" htmlFor="message">
+                  <label className="block form-label text-gray-700 mb-2" htmlFor="message">
                     Message
                   </label>
                   <textarea
