@@ -5,8 +5,8 @@ import { SectionLabel } from '@/components/common/SectionLabel'
 const faqData = [
   {
     id: 'faq-1',
-    question: 'What products does INEXO Casts Metals specialize in?',
-    answer: 'INEXO Casts Metals specializes in high-performance feeding system solutions for metal casting foundries. Our core product line includes custom-engineered exothermic and insulating riser sleeves, breaker cores, and specialized feeding accessories that optimize casting yields and reduce casting defects.',
+    question: 'What products does INEXO Cast Metals specialize in?',
+    answer: 'INEXO Cast Metals specializes in high-performance feeding system solutions for metal casting foundries. Our core product line includes custom-engineered exothermic and insulating riser sleeves, breaker cores, and specialized feeding accessories that optimize casting yields and reduce casting defects.',
   },
   {
     id: 'faq-2',

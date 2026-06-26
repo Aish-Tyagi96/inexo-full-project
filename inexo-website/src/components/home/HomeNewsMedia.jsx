@@ -35,7 +35,7 @@ export function HomeNewsMedia() {
               </h2>
 
               <p className="mt-8 news-panel-description w-full text-center lg:mt-[42px] max-[1399px]:mx-auto max-[1399px]:w-[50%] min-[1400px]:w-[70%]">
-                Stay updated with the latest news, milestones, and industry developments from INEXO Metal Casts.
+                Stay updated with the latest news, milestones, and industry developments from INEXO Cast Metals.
               </p>
             </div>
           </div>
