@@ -4,7 +4,7 @@ import { Container } from '@/components/common/Container'
 import { FoundryProductCard } from '@/components/common/FoundryProductCard'
 import { ProductsHero } from '@/components/products/ProductsHero'
 import { PillTag } from '@/components/common/PillTag'
-import { toProductCard, toSubCategoryCard } from '@/data/productCatalog'
+import { toProductCard, toSubCategoryCard, toCategoryCard } from '@/data/productCatalog'
 import { useProductCatalogQuery } from '@/hooks/useProductCatalogQuery'
 
 export default function ProductsPage() {
@@ -23,7 +23,7 @@ export default function ProductsPage() {
 
   const subCategoryProducts = catalog.getProductsByCategoryAndSubCategorySlugs(category.slug, subCategory.slug)
     .map((product) => toProductCard(product))
-  const relatedCards = [
+  let relatedCards = [
     ...catalog.getSubCategoriesByCategorySlug(category.slug)
       .filter((item) => item.id !== subCategory.id)
       .map((item) => toSubCategoryCard(item, { categorySlug: category.slug })),
@@ -31,6 +31,15 @@ export default function ProductsPage() {
       .filter((product) => product.subCategoryId === null)
       .map((product) => toProductCard(product)),
   ].slice(0, 4)
+
+  let showGenericTitle = false
+  if (relatedCards.length === 0) {
+    relatedCards = catalog.categories
+      .filter((c) => c.id !== category.id)
+      .map((c) => toCategoryCard(c, { ctaLabel: 'View Products' }))
+      .slice(0, 4)
+    showGenericTitle = true
+  }
   const heroSlides = [
     {
       id: `${subCategory.slug}-hero`,
@@ -78,7 +87,9 @@ export default function ProductsPage() {
         <Container>
           <div className="text-center">
             <PillTag>Request Data Sheet</PillTag>
-            <h2 className="type-2 mt-8">Related Products of {category.name}</h2>
+            <h2 className="type-2 mt-8">
+              {showGenericTitle ? 'Related Products' : `Related Products of ${category.name}`}
+            </h2>
           </div>
 
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4 xl:gap-8">

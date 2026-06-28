@@ -60,9 +60,15 @@ export function HomePurpose() {
           <h2 className="type-4 mt-8">Our Vision, Mission &amp; Values</h2>
         </div>
 
-        <div className="mt-12 flex flex-col gap-8 lg:mt-16 lg:gap-12 xl:gap-14">
+        <div className="mt-12 flex flex-col gap-8 lg:mt-16 lg:gap-12 xl:gap-14 overflow-x-hidden">
           {purposeItems.map((item) => (
-            <PurposeInfoCard key={item.id} className={item.align} icon={item.icon} title={item.title}>
+            <PurposeInfoCard
+              key={item.id}
+              className={item.align}
+              icon={item.icon}
+              title={item.title}
+              direction={item.id === 'mission' ? 'right' : 'left'}
+            >
               {item.description}
             </PurposeInfoCard>
           ))}

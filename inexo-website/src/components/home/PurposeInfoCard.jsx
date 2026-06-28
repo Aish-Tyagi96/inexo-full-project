@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import ourMissionIcon from '@/assets/images/home/OurMission.svg'
 import ourValuesIcon from '@/assets/images/home/OurValues.svg'
 import ourVisionIcon from '@/assets/images/home/OurVision.svg'
@@ -8,9 +9,15 @@ const icons = {
   values: ourValuesIcon,
 }
 
-export function PurposeInfoCard({ icon, title, children, className = '' }) {
+export function PurposeInfoCard({ icon, title, children, className = '', direction = 'left' }) {
+  const startX = direction === 'left' ? -300 : 300
+
   return (
-    <article
+    <motion.article
+      initial={{ opacity: 0, x: startX }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex w-full flex-col gap-5 rounded-[15px] bg-white px-5 py-6 sm:flex-row sm:gap-8 sm:px-8 sm:py-8 lg:max-w-[1000px] lg:px-[56px] lg:py-[48px] ${className}`.trim()}
     >
       <div className="flex h-[101px] w-[101px] shrink-0 items-center justify-center rounded-full bg-[rgba(0,48,122,0.12)]">
@@ -25,6 +32,6 @@ export function PurposeInfoCard({ icon, title, children, className = '' }) {
           {children}
         </p>
       </div>
-    </article>
+    </motion.article>
   )
 }

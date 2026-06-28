@@ -15,29 +15,43 @@ const customers = [
 ]
 
 export function HomeCustomersWeServe() {
+  // Duplicate the customers array to construct a seamless scrolling marquee
+  const marqueeItems = [...customers, ...customers, ...customers, ...customers]
+
   return (
-    <section className="bg-surface-page py-12 md:py-20 lg:py-[100px]">
+    <section className="bg-surface-page py-12 md:py-20 lg:py-[100px] overflow-hidden">
       <Container>
         <div className="flex flex-col items-center">
-          {/* <SectionLabel>Our Clients</SectionLabel> */}
-
-          <h2 className="type-2 mt-8 text-center md:mt-[48px]">
+          <h2 className="type-2 mt-8 text-center md:mt-[48px] mb-12">
             Customers We Serve
           </h2>
 
-          <div className="mt-12 grid w-full grid-cols-2 gap-8 md:mt-16 md:grid-cols-3 lg:grid-cols-5 lg:gap-10">
-            {customers.map((customer) => (
-              <div
-                key={customer.name}
-                className="flex items-center justify-center p-6 lg:p-8"
-              >
-                <img
-                  alt={customer.name}
-                  src={customer.logo}
-                  className="h-auto w-full max-w-[140px] object-contain md:max-w-[160px] lg:max-w-[180px]"
-                />
-              </div>
-            ))}
+          <div className="w-full overflow-hidden relative">
+            {/* Smooth gradient fade overlays at the edges */}
+            <div 
+              style={{ background: 'linear-gradient(to right, var(--color-surface-page), transparent)' }} 
+              className="absolute left-0 top-0 bottom-0 w-16 md:w-32 z-10 pointer-events-none" 
+            />
+            <div 
+              style={{ background: 'linear-gradient(to left, var(--color-surface-page), transparent)' }} 
+              className="absolute right-0 top-0 bottom-0 w-16 md:w-32 z-10 pointer-events-none" 
+            />
+
+            {/* Seamless scrolling marquee list wrapper */}
+            <div className="flex w-max animate-marquee-reverse gap-8 md:gap-16 py-4">
+              {marqueeItems.map((customer, idx) => (
+                <div
+                  key={`${customer.name}-${idx}`}
+                  className="flex items-center justify-center p-4 w-[160px] sm:w-[200px] md:w-[240px] shrink-0"
+                >
+                  <img
+                    alt={customer.name}
+                    src={customer.logo}
+                    className="h-auto w-full max-w-[120px] sm:max-w-[150px] md:max-w-[180px] object-contain select-none pointer-events-none"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </Container>

@@ -497,6 +497,8 @@ export default function SolutionsShowcase() {
   const [openPanels, setOpenPanels] = useState(defaultOpenPanels)
   const [sectionImageIndexes, setSectionImageIndexes] = useState({})
   const [showVideo, setShowVideo] = useState(false)
+  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false)
+  const [solutionDropdownOpen, setSolutionDropdownOpen] = useState(false)
 
   const activeCategory = solutionCategories.find((category) => category.id === activeCategoryId) ?? solutionCategories[0]
   const activeSolution = activeCategory.items.find((item) => item.id === activeSolutionId) ?? activeCategory.items[0]
@@ -546,7 +548,111 @@ export default function SolutionsShowcase() {
           </div>
 
           <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(400px,34%)_minmax(0,1fr)] xl:grid-cols-[minmax(400px,36%)_minmax(0,1fr)] xl:gap-10 2xl:grid-cols-[minmax(460px,38%)_minmax(0,1fr)]">
-            <aside className="bg-[#FBF8EF] px-5 py-7 sm:px-8 sm:py-9 lg:min-h-[760px] min-w-0">
+            {/* Mobile/Tablet Dropdown Selector */}
+            <div className="relative block lg:hidden w-full bg-[#FBF8EF] px-5 py-6 rounded-[15px] border border-[#00307A]/10 z-20 space-y-4">
+              <h3 className="type-2 text-center mb-2">
+                Our Solutions
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Category Dropdown */}
+                <div className="relative">
+                  <label className="block text-[13px] font-semibold text-brand-blue/60 uppercase tracking-wider mb-1.5 pl-1">
+                    Select Category
+                  </label>
+                  <button 
+                    className="flex w-full items-center justify-between gap-3 text-left font-serif text-[16px] font-bold text-brand-blue bg-white border border-[#00307A]/20 rounded-[10px] px-3.5 py-3 shadow-sm"
+                    onClick={() => {
+                      setCategoryDropdownOpen(!categoryDropdownOpen)
+                      setSolutionDropdownOpen(false)
+                    }}
+                    type="button"
+                  >
+                    <span className="truncate">{activeCategory.title}</span>
+                    <ChevronIcon open={categoryDropdownOpen} />
+                  </button>
+
+                  {categoryDropdownOpen && (
+                    <div className="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-[10px] p-2 border border-[#00307A]/20 shadow-lg z-30">
+                      <ul className="space-y-1">
+                        {solutionCategories.map((category) => {
+                          const isSelected = category.id === activeCategoryId
+                          return (
+                            <li key={category.id}>
+                              <button
+                                className={`w-full text-left py-2 px-3 rounded-[6px] font-serif text-[15px] font-medium leading-[1.3] transition-colors ${
+                                  isSelected 
+                                    ? 'bg-[#00307A]/10 text-brand-blue font-bold border-l-4 border-brand-yellow pl-2' 
+                                    : 'text-brand-blue hover:bg-brand-blue/5'
+                                }`}
+                                onClick={() => {
+                                  handleCategoryChange(category)
+                                  setCategoryDropdownOpen(false)
+                                }}
+                                type="button"
+                              >
+                                {category.title}
+                              </button>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
+                {/* Solution Dropdown */}
+                <div className="relative">
+                  <label className="block text-[13px] font-semibold text-brand-blue/60 uppercase tracking-wider mb-1.5 pl-1">
+                    Select Solution
+                  </label>
+                  <button 
+                    className="flex w-full items-center justify-between gap-3 text-left font-serif text-[16px] font-bold text-brand-blue bg-white border border-[#00307A]/20 rounded-[10px] px-3.5 py-3 shadow-sm"
+                    onClick={() => {
+                      setSolutionDropdownOpen(!solutionDropdownOpen)
+                      setCategoryDropdownOpen(false)
+                    }}
+                    type="button"
+                  >
+                    <span className="truncate">
+                      <TitleWithCaps text={activeSolution.title} />
+                    </span>
+                    <ChevronIcon open={solutionDropdownOpen} />
+                  </button>
+
+                  {solutionDropdownOpen && (
+                    <div className="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-[10px] p-2 border border-[#00307A]/20 shadow-lg max-h-[250px] overflow-y-auto z-30">
+                      <ul className="space-y-1">
+                        {activeCategory.items.map((solution) => {
+                          const isSelected = solution.id === activeSolution.id
+                          return (
+                            <li key={solution.id}>
+                              <button
+                                className={`w-full text-left py-2 px-3 rounded-[6px] font-serif text-[15px] font-medium leading-[1.3] transition-colors ${
+                                  isSelected 
+                                    ? 'bg-[#00307A]/10 text-brand-blue font-bold border-l-4 border-brand-yellow pl-2' 
+                                    : 'text-brand-blue hover:bg-brand-blue/5'
+                                }`}
+                                onClick={() => {
+                                  handleSolutionChange(solution.id)
+                                  setSolutionDropdownOpen(false)
+                                }}
+                                type="button"
+                              >
+                                <TitleWithCaps text={solution.title} />
+                              </button>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Sidebar (lg and up) */}
+            <aside className="hidden lg:block bg-[#FBF8EF] px-5 py-7 sm:px-8 sm:py-9 lg:min-h-[760px] min-w-0">
               <h3 className="type-2 text-center ">
                 Our Solutions
               </h3>

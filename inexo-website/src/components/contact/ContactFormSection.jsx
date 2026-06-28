@@ -360,57 +360,24 @@ export function ContactFormSection() {
 
             {/* Office Details */}
             <div className="space-y-6">
-              <h3
-                style={{
-                  color: '#030F95',
-                  textAlign: 'justify',
-                  fontFamily: '"IBM Plex Sans", sans-serif',
-                  fontSize: '42px',
-                  fontWeight: 700,
-                  lineHeight: 'normal',
-                }}
-              >
+              <h3 className="contact-office-heading">
                 Regd. Office &amp; Works
               </h3>
 
-              <p
-                style={{
-                  color: '#030F95',
-                  fontFamily: '"IBM Plex Sans", sans-serif',
-                  fontSize: '32px',
-                  fontWeight: 500,
-                  lineHeight: 'normal',
-                }}
-              >
+              <p className="contact-office-body">
                 No:28, Thiruvallur High Road, via Thirumazhisai, Puduchathiram Post, Gudapakkam, Chennai – 600 124, Tamil Nadu, India.
               </p>
 
-              <p
-                style={{
-                  color: '#030F95',
-                  fontFamily: '"IBM Plex Sans", sans-serif',
-                  fontSize: '32px',
-                  fontWeight: 500,
-                  lineHeight: 'normal',
-                }}
-              >
+              <p className="contact-office-body">
                 Mobile Number :{' '}
-                <a href="tel:+919790904848" className="hover:underline text-[#030F95]">
+                <a href="tel:+919790904848">
                   +91 – 97909 04848
                 </a>
               </p>
 
-              <p
-                style={{
-                  color: '#030F95',
-                  fontFamily: '"IBM Plex Sans", sans-serif',
-                  fontSize: '32px',
-                  fontWeight: 500,
-                  lineHeight: 'normal',
-                }}
-              >
+              <p className="contact-office-body">
                 Email id :{' '}
-                <a href="mailto:sales@inexocast.in" className="hover:underline text-[#030F95]">
+                <a href="mailto:sales@inexocast.in">
                   sales@inexocast.in
                 </a>
               </p>

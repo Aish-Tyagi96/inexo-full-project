@@ -4,251 +4,252 @@
 
   /* Pill / Tag typography */
   --font-family-pill: var(--font-family-display-serif);
-  --font-size-pill: 24px;
+  --font-size-pill: 20px;
   --line-height-pill: normal;
   --font-weight-pill: 700;
 
-  --font-size-display-hero: 64px;
-  --line-height-display-hero: 84px;
+  --font-size-display-hero: 52px;
+  --line-height-display-hero: 68px;
   --font-weight-display-hero: 500;
 
-  --font-size-heading-section: 48px;
-  --line-height-heading-section: 73px;
+  --font-size-heading-section: 38px;
+  --line-height-heading-section: 54px;
   --font-weight-heading-section: 700;
 
-  --font-size-body-large: 24px;
-  --line-height-body-large: 36px;
+  --font-size-body-large: 18px;
+  --line-height-body-large: 28px;
   --font-weight-body-large: 400;
 
-  --font-size-heading-centered: 48px;
+  --font-size-heading-centered: 38px;
   --line-height-heading-centered: normal;
   --font-weight-heading-centered: 600;
 
-  --font-size-body-centered: 24px;
-  --line-height-body-centered: 32px;
+  --font-size-body-centered: 18px;
+  --line-height-body-centered: 26px;
   --font-weight-body-centered: 400;
 
-  --font-size-title-on-dark: 36px;
+  --font-size-title-on-dark: 28px;
   --line-height-title-on-dark: normal;
   --font-weight-title-on-dark: 600;
 
   --font-family-managing-director-desk-heading: var(--font-family-display-serif);
-  --font-size-managing-director-desk-heading: 48px;
-  --line-height-managing-director-desk-heading: 48px;
+  --font-size-managing-director-desk-heading: 38px;
+  --line-height-managing-director-desk-heading: 44px;
   --font-weight-managing-director-desk-heading: 700;
 
   --font-family-managing-director-desk-body: var(--font-family-display-serif);
-  --font-size-managing-director-desk-body: 24px;
-  --line-height-managing-director-desk-body: 29px;
+  --font-size-managing-director-desk-body: 18px;
+  --line-height-managing-director-desk-body: 26px;
   --font-weight-managing-director-desk-body: 300;
 
-  --font-size-foundry-product-card-title: 36px;
+  --font-size-foundry-product-card-title: 28px;
   --line-height-foundry-product-card-title: normal;
   --font-weight-foundry-product-card-title: 600;
 
-  --font-size-foundry-product-card-description: 18px;
+  --font-size-foundry-product-card-description: 15px;
   --line-height-foundry-product-card-description: normal;
   --font-weight-foundry-product-card-description: 400;
 
-  --font-size-foundry-product-card-cta: 24px;
+  --font-size-foundry-product-card-cta: 18px;
   --line-height-foundry-product-card-cta: normal;
   --font-weight-foundry-product-card-cta: 600;
 
-  --font-size-purpose-card-title: 28px;
+  --font-size-purpose-card-title: 22px;
   --line-height-purpose-card-title: normal;
   --font-weight-purpose-card-title: 700;
 
-  --font-size-purpose-card-description: 20px;
-  --line-height-purpose-card-description: 30px;
+  --font-size-purpose-card-description: 16px;
+  --line-height-purpose-card-description: 24px;
   --font-weight-purpose-card-description: 400;
 
-  --font-size-news-media-card-title: 24px;
-  --line-height-news-media-card-title: 37px;
+  --font-size-news-media-card-title: 18px;
+  --line-height-news-media-card-title: 28px;
   --font-weight-news-media-card-title: 500;
 
-  --font-size-news-media-card-description: 16px;
-  --line-height-news-media-card-description: 27px;
+  --font-size-news-media-card-description: 14px;
+  --line-height-news-media-card-description: 22px;
   --font-weight-news-media-card-description: 400;
 
-  --font-size-news-media-card-date: 21px;
-  --line-height-news-media-card-date: 40px;
+  --font-size-news-media-card-date: 16px;
+  --line-height-news-media-card-date: 30px;
   --font-weight-news-media-card-date: 700;
 
-  --font-size-news-media-card-read-more: 20px;
+  --font-size-news-media-card-read-more: 16px;
   --line-height-news-media-card-read-more: 1;
   --font-weight-news-media-card-read-more: 700;
 
-  --font-size-footer-address: 24px;
+  --font-size-footer-address: 16px;
   --line-height-footer-address: 1;
   --font-weight-footer-address: 400;
 
-  --font-size-footer-section-heading: 40px;
+  --font-size-footer-section-heading: 28px;
   --line-height-footer-section-heading: 1;
   --font-weight-footer-section-heading: 700;
 
-  --font-size-footer-office-heading: 28px;
+  --font-size-footer-office-heading: 20px;
   --line-height-footer-office-heading: 1;
   --font-weight-footer-office-heading: 700;
 
-  --font-size-footer-submit-button: 24px;
+  --font-size-footer-submit-button: 18px;
   --line-height-footer-submit-button: 1;
   --font-weight-footer-submit-button: 700;
 
-  --font-size-body-on-dark: 18px;
+  --font-size-body-on-dark: 15px;
   --line-height-body-on-dark: normal;
   --font-weight-body-on-dark: 400;
 
-  --font-size-button-primary: 24px;
+  --font-size-button-primary: 18px;
   --line-height-button-primary: normal;
   --font-weight-button-primary: 700;
 
   --font-family-navigation-menu: ".SF Compact", var(--font-family-primary-sans);
-  --font-size-navigation-menu: 24px;
+  --font-size-navigation-menu: 18px;
   --line-height-navigation-menu: normal;
   --font-weight-navigation-menu: 457;
 
-  --font-size-hero-title-on-light: 64px;
-  --line-height-hero-title-on-light: 84px;
+  --font-size-hero-title-on-light: 52px;
+  --line-height-hero-title-on-light: 68px;
   --font-weight-hero-title-on-light: 700;
 
   --font-family-search-input: var(--font-family-primary-sans);
-  --font-size-search-input: 18px;
+  --font-size-search-input: 16px;
   --line-height-search-input: normal;
   --font-weight-search-input: 700;
 
-  --font-size-section-label: 20px;
+  --font-size-section-label: 16px;
   --line-height-section-label: normal;
   --font-weight-section-label: 700;
 
   /* Solutions category title token (used in SolutionsShowcase) */
   --font-family-solutions-category-title: var(--font-family-display-serif);
-  --font-size-solutions-category-title: 32px;
-  --line-height-solutions-category-title: 55px;
+  --font-size-solutions-category-title: 24px;
+  --line-height-solutions-category-title: 40px;
   --font-weight-solutions-category-title: 700;
   --letter-spacing-solutions-category-title: 0px;
 
   /* Solution item title tokens (used for {solution.title}) */
   --font-family-solution-title: var(--font-family-display-serif);
-  --font-size-solution-title: 24px;
-  --line-height-solution-title: 55px;
+  --font-size-solution-title: 18px;
+  --line-height-solution-title: 40px;
   --font-weight-solution-title: 500;
   --font-weight-solution-title-caps: 700;
   --letter-spacing-solution-title: 0px;
 
   /* Solution main title tokens (used for active solution header) */
   --font-family-solution-main-title: var(--font-family-display-serif);
-  --font-size-solution-main-title: 28px;
-  --line-height-solution-main-title: 55px;
+  --font-size-solution-main-title: 24px;
+  --line-height-solution-main-title: 40px;
   --font-weight-solution-main-title: 500;
   --letter-spacing-solution-main-title: 0px;
 
   /* Solution summary body tokens (used for activeSolution.summary) */
   --font-family-solution-summary: var(--font-family-primary-sans);
-  --font-size-solution-summary: 20px;
-  --line-height-solution-summary: 36px;
+  --font-size-solution-summary: 16px;
+  --line-height-solution-summary: 28px;
   --font-weight-solution-summary: 400;
   --letter-spacing-solution-summary: 0px;
 
   --font-family-solution-accordion-label: var(--font-family-primary-sans);
-  --font-size-solution-accordion-label: 24px;
-  --line-height-solution-accordion-label: 65px;
+  --font-size-solution-accordion-label: 18px;
+  --line-height-solution-accordion-label: 45px;
   --font-weight-solution-accordion-label: 600;
   --letter-spacing-solution-accordion-label: 0px;
 
   --font-family-solution-accordion-value: var(--font-family-primary-sans);
-  --font-size-solution-accordion-value: 24px;
-  --line-height-solution-accordion-value: 65px;
+  --font-size-solution-accordion-value: 18px;
+  --line-height-solution-accordion-value: 45px;
   --font-weight-solution-accordion-value: 400;
   --letter-spacing-solution-accordion-value: 0px;
 
   --font-family-products-benefits-group-title: var(--font-family-display-serif);
-  --font-size-products-benefits-group-title: 30px;
-  --line-height-products-benefits-group-title: 55px;
+  --font-size-products-benefits-group-title: 24px;
+  --line-height-products-benefits-group-title: 40px;
   --font-weight-products-benefits-group-title: 500;
   --letter-spacing-products-benefits-group-title: 0px;
 
   --font-family-products-benefits-list: var(--font-family-primary-sans);
-  --font-size-products-benefits-list: 24px;
-  --line-height-products-benefits-list: 45px;
+  --font-size-products-benefits-list: 18px;
+  --line-height-products-benefits-list: 32px;
   --font-weight-products-benefits-list: 400;
   --letter-spacing-products-benefits-list: 0px;
 
   /* Careers description typography */
   --font-family-careers-body: var(--font-family-primary-sans);
-  --font-size-careers-body: 32px;
-  --line-height-careers-body: 64px;
+  --font-size-careers-body: 22px;
+  --line-height-careers-body: 44px;
   --font-weight-careers-body: 400;
 
   /* Careers card title typography */
   --font-family-careers-card-title: var(--font-family-primary-sans);
-  --font-size-careers-card-title: 32px;
-  --line-height-careers-card-title: 48px;
+  --font-size-careers-card-title: 24px;
+  --line-height-careers-card-title: 36px;
   --font-weight-careers-card-title: 700;
 
   /* FAQ question typography */
   --font-family-faq-question: Avenir, var(--font-family-primary-sans);
-  --font-size-faq-question: 24px;
-  --line-height-faq-question: 36px;
+  --font-size-faq-question: 18px;
+  --line-height-faq-question: 28px;
   --font-weight-faq-question: 800;
 }
 
 @media (max-width: 1279px) {
   :root {
-    --font-size-display-hero: 52px;
-    --line-height-display-hero: 68px;
-    --font-size-hero-title-on-light: 52px;
-    --line-height-hero-title-on-light: 68px;
-    --font-size-heading-section: 42px;
-    --line-height-heading-section: 62px;
-    --font-size-body-large: 22px;
-    --line-height-body-large: 34px;
-    --font-size-heading-centered: 42px;
-    --font-size-body-centered: 22px;
-    --line-height-body-centered: 32px;
-    --font-size-title-on-dark: 32px;
-    --font-size-managing-director-desk-heading: 42px;
-    --line-height-managing-director-desk-heading: 42px;
-    --font-size-managing-director-desk-body: 22px;
-    --line-height-managing-director-desk-body: 28px;
-    --font-size-body-on-dark: 17px;
-    --font-size-button-primary: 20px;
-    --font-size-navigation-menu: 20px;
-    --font-size-careers-body: 24px;
-    --line-height-careers-body: 48px;
-    --font-size-careers-card-title: 24px;
-    --line-height-careers-card-title: 36px;
-    --font-size-faq-question: 20px;
-    --line-height-faq-question: 30px;
+    --font-size-display-hero: 42px;
+    --line-height-display-hero: 56px;
+    --font-size-hero-title-on-light: 42px;
+    --line-height-hero-title-on-light: 56px;
+    --font-size-heading-section: 32px;
+    --line-height-heading-section: 46px;
+    --font-size-body-large: 16px;
+    --line-height-body-large: 26px;
+    --font-size-heading-centered: 32px;
+    --font-size-body-centered: 16px;
+    --line-height-body-centered: 24px;
+    --font-size-title-on-dark: 24px;
+    --font-size-managing-director-desk-heading: 32px;
+    --line-height-managing-director-desk-heading: 36px;
+    --font-size-managing-director-desk-body: 16px;
+    --line-height-managing-director-desk-body: 24px;
+    --font-size-body-on-dark: 14px;
+    --font-size-button-primary: 16px;
+    --font-size-navigation-menu: 16px;
+    --font-size-careers-body: 18px;
+    --line-height-careers-body: 36px;
+    --font-size-careers-card-title: 18px;
+    --line-height-careers-card-title: 28px;
+    --font-size-faq-question: 16px;
+    --line-height-faq-question: 24px;
   }
 }
 
 @media (max-width: 767px) {
   :root {
-    --font-size-display-hero: 36px;
-    --line-height-display-hero: 48px;
-    --font-size-hero-title-on-light: 36px;
-    --line-height-hero-title-on-light: 48px;
-    --font-size-heading-section: 32px;
-    --line-height-heading-section: 46px;
-    --font-size-body-large: 18px;
-    --line-height-body-large: 28px;
-    --font-size-heading-centered: 32px;
-    --font-size-body-centered: 18px;
-    --line-height-body-centered: 28px;
-    --font-size-title-on-dark: 26px;
-    --font-size-managing-director-desk-heading: 32px;
-    --line-height-managing-director-desk-heading: 36px;
-    --font-size-managing-director-desk-body: 18px;
-    --line-height-managing-director-desk-body: 24px;
-    --font-size-body-on-dark: 16px;
-    --font-size-button-primary: 18px;
-    --font-size-navigation-menu: 18px;
-    --font-size-careers-body: 18px;
-    --line-height-careers-body: 32px;
-    --font-size-careers-card-title: 18px;
-    --line-height-careers-card-title: 26px;
-    --font-size-faq-question: 16px;
-    --line-height-faq-question: 24px;
+    --font-size-display-hero: 28px;
+    --line-height-display-hero: 38px;
+    --font-size-hero-title-on-light: 28px;
+    --line-height-hero-title-on-light: 38px;
+    --font-size-heading-section: 24px;
+    --line-height-heading-section: 34px;
+    --font-size-body-large: 14px;
+    --line-height-body-large: 22px;
+    --font-size-heading-centered: 24px;
+    --font-size-body-centered: 14px;
+    --line-height-body-centered: 22px;
+    --font-size-title-on-dark: 20px;
+    --font-size-managing-director-desk-heading: 24px;
+    --line-height-managing-director-desk-heading: 28px;
+    --font-size-managing-director-desk-body: 14px;
+    --line-height-managing-director-desk-body: 20px;
+    --font-size-body-on-dark: 13px;
+    --font-size-button-primary: 14px;
+    --font-size-navigation-menu: 14px;
+    --font-size-careers-body: 15px;
+    --line-height-careers-body: 26px;
+    --font-size-careers-card-title: 15px;
+    --line-height-careers-card-title: 22px;
+    --font-size-faq-question: 14px;
+    --line-height-faq-question: 20px;
   }
 }
+
 

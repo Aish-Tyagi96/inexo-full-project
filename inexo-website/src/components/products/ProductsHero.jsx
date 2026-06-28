@@ -9,16 +9,16 @@ const defaultSlides = [
     title: 'INEXO Feeding Systems - Strength in Every Structure',
     imageSrc: productHeroImage,
   },
-  {
-    id: 2,
-    title: 'Engineered Sleeves Built For Better Yield And Reliable Feed Performance',
-    imageSrc: productHeroImage,
-  },
-  {
-    id: 3,
-    title: 'Product Innovation Designed For Modern Foundry Needs',
-    imageSrc: productHeroImage,
-  },
+  // {
+  //   id: 2,
+  //   title: 'Engineered Sleeves Built For Better Yield And Reliable Feed Performance',
+  //   imageSrc: productHeroImage,
+  // },
+  // {
+  //   id: 3,
+  //   title: 'Product Innovation Designed For Modern Foundry Needs',
+  //   imageSrc: productHeroImage,
+  // },
 ]
 
 export function ProductsHero({ slides = defaultSlides }) {
@@ -118,11 +118,10 @@ export function ProductsHero({ slides = defaultSlides }) {
                   {heroSlides.map((slide, index) => (
                     <button
                       aria-label={`Go to slide ${index + 1}`}
-                      className={`rounded-full transition-all duration-200 cursor-pointer ${
-                        index === currentIndex
+                      className={`rounded-full transition-all duration-200 cursor-pointer ${index === currentIndex
                           ? 'h-[10px] w-[28px] bg-[#FFB400] sm:h-[12px] sm:w-[34px] lg:h-[14px] lg:w-[39.5px]'
                           : 'h-[10px] w-[10px] bg-[#7D95BD] sm:h-[12px] sm:w-[12px] lg:h-[15px] lg:w-[15px]'
-                      }`}
+                        }`}
                       key={slide.id}
                       onClick={() => goToSlide(index)}
                       type="button"

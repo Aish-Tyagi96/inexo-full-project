@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react'
+import { motion, useInView, animate } from 'framer-motion'
 import arrowIcon from '@/assets/images/home/card-right-arrow.svg'
 import { Container } from '@/components/common/Container'
 import { SectionLabel } from '@/components/common/SectionLabel'
@@ -10,6 +12,27 @@ const ratingPoints = [
   'Quality Of Supplies',
   'Ontime Deliveries',
 ]
+
+function CountUp({ to, from = 0, duration = 2.5 }) {
+  const [count, setCount] = useState(from)
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-50px' })
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(from, to, {
+        duration: duration,
+        ease: 'easeOut',
+        onUpdate: (latest) => {
+          setCount(Math.round(latest))
+        },
+      })
+      return () => controls.stop()
+    }
+  }, [isInView, from, to, duration])
+
+  return <span ref={ref}>{count}</span>
+}
 
 function ArrowBadge({ direction = 'right', className = '' }) {
   return (
@@ -28,74 +51,90 @@ function ArrowBadge({ direction = 'right', className = '' }) {
 
 function RetentionCard({ className = '', showArrow = true }) {
   return (
-    <article
+    <motion.article
+      initial={{ opacity: 0, x: -120 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex min-h-[210px] items-center justify-between gap-6 rounded-[15px] bg-[rgba(0,48,122,0.03)] px-7 py-8 sm:px-9 ${className}`.trim()}
     >
       <div>
-        <h3 className="font-['IBM_Plex_Sans'] text-[24px] font-bold leading-tight text-brand-blue lg:text-[28px]">
+        <h3 className="why-inexo-card-title">
           Customer Retention
         </h3>
 
-        <p className="mt-6 max-w-[250px] font-['IBM_Plex_Sans'] text-[17px] font-medium leading-[1.35] text-brand-blue lg:text-[18px]">
+        <p className="why-inexo-card-description mt-6 max-w-[250px]">
           Consistently trusted by our Customer year after year
         </p>
       </div>
 
       {showArrow && <ArrowBadge />}
-    </article>
+    </motion.article>
   )
 }
 
 function RetentionStat({ className = '', children }) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
       className={`flex items-center justify-center rounded-[15px] bg-brand-blue text-white ${className}`.trim()}
     >
-      <span className="font-['IBM_Plex_Serif'] text-[58px] font-semibold leading-none sm:text-[66px] lg:text-[76px] select-none">
-        98%
+      <span className="why-inexo-stat-number select-none">
+        <CountUp to={98} />%
       </span>
       {children}
-    </div>
+    </motion.div>
   )
 }
 
 function RatingStat({ className = '', children }) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
       className={`flex items-center justify-center rounded-[15px] bg-brand-yellow text-brand-blue ${className}`.trim()}
     >
-      <span className="relative font-['IBM_Plex_Serif'] text-[78px] font-semibold leading-none sm:text-[90px] lg:text-[104px] select-none">
-        9
-        <sup className="absolute -right-6 top-2 font-['IBM_Plex_Sans'] text-[28px] font-bold leading-none sm:text-[32px] lg:text-[36px]">
+      <span className="relative why-inexo-rating-number select-none">
+        <CountUp to={9} />
+        <sup className="absolute -right-6 top-2 why-inexo-rating-sup">
           +
         </sup>
       </span>
       {children}
-    </div>
+    </motion.div>
   )
 }
 
 function RatingCard({ className = '', showArrow = true }) {
   return (
-    <article
+    <motion.article
+      initial={{ opacity: 0, x: 120 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex min-h-[250px] items-center gap-7 rounded-[15px] bg-[rgba(0,48,122,0.03)] px-7 py-8 sm:px-9 ${className}`.trim()}
     >
       {showArrow && <ArrowBadge direction="left" />}
 
       <div>
-        <h3 className="font-['IBM_Plex_Sans'] text-[24px] font-bold leading-tight text-brand-blue lg:text-[28px]">
+        <h3 className="why-inexo-card-title">
           Rated By Customers
         </h3>
 
-        <p className="mt-6 font-['IBM_Plex_Sans'] text-[17px] font-medium leading-[1.35] text-brand-blue lg:text-[18px]">
+        <p className="why-inexo-card-description mt-6">
           Across by customers touch points
         </p>
 
-        <p className="mt-5 font-['IBM_Plex_Sans'] text-[13px] font-medium leading-relaxed text-brand-blue lg:text-[14px]">
+        <p className="why-inexo-card-detail mt-5">
           {ratingPoints.join(', ')}
         </p>
       </div>
-    </article>
+    </motion.article>
   )
 }
 

@@ -4,7 +4,7 @@ import searchIcon from '@/assets/images/brand/search_Icon.svg'
 import { Container } from '@/components/common/Container'
 import { ProductsHero } from '@/components/products/ProductsHero'
 import { FoundryProductCard } from '@/components/common/FoundryProductCard'
-import { toProductCard } from '@/data/productCatalog'
+import { toProductCard, toCategoryCard } from '@/data/productCatalog'
 import { useProductCatalogQuery } from '@/hooks/useProductCatalogQuery'
 
 function ImageCarousel({ images = [], alt = 'Gallery' }) {
@@ -66,7 +66,7 @@ export default function ProductDetailPage() {
     .map((id) => catalog.products.find((p) => p.id === id || p.slug === id))
     .filter(Boolean)
 
-  const relatedProducts = (
+  let relatedProducts = (
     explicitRelated.length > 0
       ? explicitRelated
       : subCategory
@@ -77,6 +77,16 @@ export default function ProductDetailPage() {
               .filter((item) => item.id !== product.id)
           : catalog.products.filter((item) => item.id !== product.id)
   ).map((item) => toProductCard(item))
+
+  let showGenericTitle = false
+  if (relatedProducts.length === 0) {
+    const activeCategoryId = category ? category.id : null
+    relatedProducts = catalog.categories
+      .filter((c) => c.id !== activeCategoryId)
+      .map((c) => toCategoryCard(c, { ctaLabel: 'View Products' }))
+      .slice(0, 4)
+    showGenericTitle = true
+  }
 
   const keyFeatureItems = product.features?.length
     ? product.features.map((feature) => ({
@@ -188,11 +198,13 @@ export default function ProductDetailPage() {
         <Container>
           <div className="text-center">
             <h2 className="type-4">
-              {subCategory
-                ? `Related Products of ${subCategory.name}`
-                : category
-                  ? `Related Products of ${category.name}`
-                  : 'Related Products'}
+              {showGenericTitle
+                ? 'Related Products'
+                : subCategory
+                  ? `Related Products of ${subCategory.name}`
+                  : category
+                    ? `Related Products of ${category.name}`
+                    : 'Related Products'}
             </h2>
           </div>
 
