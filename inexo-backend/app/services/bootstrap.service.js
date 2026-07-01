@@ -153,9 +153,42 @@ async function seedGalleryItemsData() {
   logger.info({ count: galleryItems.length }, 'Seeded default gallery items');
 }
 
+async function seedJobOpeningsData() {
+  const jobs = [
+    {
+      id: 1,
+      title: 'Production Supervisor – Chennai (Plant)',
+      description: 'Oversee production processes, maintain quality standards, and manage a skilled team of operators.',
+      link: 'https://www.linkedin.com',
+      sortOrder: 1,
+    },
+    {
+      id: 2,
+      title: 'Sales & Marketing Executive – South India Region',
+      description: 'Develop and manage client relationships, support product promotion and technical sales.',
+      link: 'https://www.linkedin.com',
+      sortOrder: 2,
+    },
+  ];
+
+  await db.sequelize.transaction(async (transaction) => {
+    for (const item of jobs) {
+      const existing = await db.JobOpening.findByPk(item.id, { transaction });
+      if (existing) {
+        await existing.update(item, { transaction });
+      } else {
+        await db.JobOpening.create(item, { transaction });
+      }
+    }
+  });
+
+  logger.info({ count: jobs.length }, 'Seeded default job openings');
+}
+
 module.exports = {
   seedCatalogData,
   seedDefaultAuthData,
   seedNewsEventsData,
   seedGalleryItemsData,
+  seedJobOpeningsData,
 };

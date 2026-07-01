@@ -4,11 +4,27 @@ import { Footer } from '@/components/common/Footer'
 import { Nav } from '@/components/common/Nav'
 
 export function SiteLayout() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
+    if (hash) {
+      const id = hash.slice(1)
+      const element = document.getElementById(id)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      } else {
+        const timer = setTimeout(() => {
+          const el = document.getElementById(id)
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' })
+          }
+        }, 150)
+        return () => clearTimeout(timer)
+      }
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [pathname, hash])
 
   return (
     <div className="min-h-screen bg-white flex flex-col">

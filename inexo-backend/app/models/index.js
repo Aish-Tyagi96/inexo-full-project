@@ -29,6 +29,8 @@ db.ProductBenefit = require('./catalog_models/product_benefit.model')(sequelize,
 db.ProductMedia = require('./catalog_models/product_media.model')(sequelize, DataTypes);
 db.NewsEvent = require('./news_events_models/news_event.model')(sequelize, DataTypes);
 db.GalleryItem = require('./news_events_models/gallery_item.model')(sequelize, DataTypes);
+db.ContactInquiry = require('./contact_models/contact_inquiry.model')(sequelize, DataTypes);
+db.JobOpening = require('./job_opening.model')(sequelize, DataTypes);
 
 db.Role.hasMany(db.AuthUser, {
   foreignKey: 'role_id',

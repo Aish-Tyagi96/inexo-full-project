@@ -12,6 +12,7 @@ const CatalogPage = lazy(() => import('@/pages/CatalogPage'))
 const MediaFormsPage = lazy(() => import('@/pages/MediaFormsPage'))
 const SettingsPage = lazy(() => import('@/pages/SettingsPage'))
 const NewsEventsPage = lazy(() => import('@/pages/NewsEventsPage'))
+const JobOpeningsPage = lazy(() => import('@/pages/JobOpeningsPage'))
 
 function RouteLoader() {
   return (
@@ -33,6 +34,7 @@ export function AppRoutes() {
             <Route element={<AuthUsersPage />} path="/auth-users" />
             <Route element={<CatalogPage />} path="/catalog" />
             <Route element={<NewsEventsPage />} path="/news-events" />
+            <Route element={<JobOpeningsPage />} path="/job-openings" />
             <Route element={<MediaFormsPage />} path="/media-forms" />
             <Route element={<SettingsPage />} path="/settings" />
           </Route>

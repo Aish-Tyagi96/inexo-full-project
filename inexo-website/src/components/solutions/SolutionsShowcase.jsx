@@ -364,11 +364,11 @@ const accordionSections = [
 
 const defaultOpenPanels = { castingDetails: true }
 
-function ChevronIcon({ open = false }) {
+function ChevronIcon({ open = false, className = 'h-[50px] w-[50px]' }) {
   return (
     <svg
       aria-hidden="true"
-      className={`h-[50px] w-[50px] shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+      className={`${className} shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
       fill="none"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
@@ -549,7 +549,7 @@ export default function SolutionsShowcase() {
 
           <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(400px,34%)_minmax(0,1fr)] xl:grid-cols-[minmax(400px,36%)_minmax(0,1fr)] xl:gap-10 2xl:grid-cols-[minmax(460px,38%)_minmax(0,1fr)]">
             {/* Mobile/Tablet Dropdown Selector */}
-            <div className="relative block lg:hidden w-full bg-[#FBF8EF] px-5 py-6 rounded-[15px] border border-[#00307A]/10 z-20 space-y-4">
+            <div className="relative block lg:hidden w-full px-5 py-6 z-20 space-y-4">
               <h3 className="type-2 text-center mb-2">
                 Our Solutions
               </h3>
@@ -561,7 +561,7 @@ export default function SolutionsShowcase() {
                     Select Category
                   </label>
                   <button 
-                    className="flex w-full items-center justify-between gap-3 text-left font-serif text-[16px] font-bold text-brand-blue bg-white border border-[#00307A]/20 rounded-[10px] px-3.5 py-3 shadow-sm"
+                    className="flex w-full items-center justify-between gap-3 text-left font-serif text-[16px] font-bold text-brand-blue bg-white border border-[#00307A]/20 rounded-full px-5 py-3 shadow-sm"
                     onClick={() => {
                       setCategoryDropdownOpen(!categoryDropdownOpen)
                       setSolutionDropdownOpen(false)
@@ -569,11 +569,11 @@ export default function SolutionsShowcase() {
                     type="button"
                   >
                     <span className="truncate">{activeCategory.title}</span>
-                    <ChevronIcon open={categoryDropdownOpen} />
+                    <ChevronIcon open={categoryDropdownOpen} className="h-6 w-6" />
                   </button>
 
                   {categoryDropdownOpen && (
-                    <div className="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-[10px] p-2 border border-[#00307A]/20 shadow-lg z-30">
+                    <div className="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-[10px] p-2 border border-[#00307A]/20 shadow-lg max-h-[280px] overflow-y-auto z-30">
                       <ul className="space-y-1">
                         {solutionCategories.map((category) => {
                           const isSelected = category.id === activeCategoryId
@@ -607,7 +607,7 @@ export default function SolutionsShowcase() {
                     Select Solution
                   </label>
                   <button 
-                    className="flex w-full items-center justify-between gap-3 text-left font-serif text-[16px] font-bold text-brand-blue bg-white border border-[#00307A]/20 rounded-[10px] px-3.5 py-3 shadow-sm"
+                    className="flex w-full items-center justify-between gap-3 text-left font-serif text-[16px] font-bold text-brand-blue bg-white border border-[#00307A]/20 rounded-full px-5 py-3 shadow-sm"
                     onClick={() => {
                       setSolutionDropdownOpen(!solutionDropdownOpen)
                       setCategoryDropdownOpen(false)
@@ -617,11 +617,11 @@ export default function SolutionsShowcase() {
                     <span className="truncate">
                       <TitleWithCaps text={activeSolution.title} />
                     </span>
-                    <ChevronIcon open={solutionDropdownOpen} />
+                    <ChevronIcon open={solutionDropdownOpen} className="h-6 w-6" />
                   </button>
 
                   {solutionDropdownOpen && (
-                    <div className="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-[10px] p-2 border border-[#00307A]/20 shadow-lg max-h-[250px] overflow-y-auto z-30">
+                    <div className="absolute left-0 right-0 top-full mt-1.5 bg-white rounded-[10px] p-2 border border-[#00307A]/20 shadow-lg max-h-[280px] overflow-y-auto z-30">
                       <ul className="space-y-1">
                         {activeCategory.items.map((solution) => {
                           const isSelected = solution.id === activeSolution.id
@@ -781,7 +781,7 @@ export default function SolutionsShowcase() {
                         type="button"
                       >
                         <span className="solutions-category-title" >{section.label}</span>
-                        <ChevronIcon open={isOpen} />
+                        <ChevronIcon open={isOpen} className="h-8 w-8 lg:h-[50px] lg:w-[50px]" />
                       </button>
 
                       {isOpen ? (

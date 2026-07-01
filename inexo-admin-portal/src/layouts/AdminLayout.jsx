@@ -4,6 +4,7 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsIcon from '@mui/icons-material/Settings'
 import NewspaperIcon from '@mui/icons-material/Newspaper'
+import WorkIcon from '@mui/icons-material/Work'
 import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
@@ -29,6 +30,7 @@ const navItems = [
   { label: 'Dashboard', icon: DashboardIcon, path: '/dashboard' },
   { label: 'Catalog', icon: Inventory2Icon, path: '/catalog' },
   { label: 'News & Events', icon: NewspaperIcon, path: '/news-events' },
+  { label: 'Job Openings', icon: WorkIcon, path: '/job-openings' },
   { label: 'Settings', icon: SettingsIcon, path: '/settings' },
 ]
 

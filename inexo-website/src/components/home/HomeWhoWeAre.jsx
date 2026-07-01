@@ -4,7 +4,7 @@ import { SectionLabel } from '@/components/common/SectionLabel'
 
 export function HomeWhoWeAre() {
   return (
-    <section className="bg-[#f4f4f4] py-10 md:py-20 lg:py-[160px]">
+    <section className="bg-[var(--color-surface-page)] py-10 md:py-20 lg:py-[160px]">
       <Container>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-10 min-[1728px]:grid-cols-[809px_782px] min-[1728px]:gap-8 min-[1728px]:justify-center">
           <div className="w-full max-w-[809px] pt-[46px]">

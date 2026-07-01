@@ -1,4 +1,4 @@
-import { Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import searchIcon from '@/assets/images/brand/search_Icon.svg'
 import { Container } from '@/components/common/Container'
 import { FoundryProductCard } from '@/components/common/FoundryProductCard'
@@ -86,7 +86,9 @@ export default function ProductsPage() {
       <section className="bg-[#f4f4f4] py-16 sm:py-20 lg:py-[120px]">
         <Container>
           <div className="text-center">
-            <PillTag>Request Data Sheet</PillTag>
+            <Link to="/contact-us#contact-form" className="inline-block transition-transform hover:scale-105">
+              <PillTag className="cursor-pointer">Request Data Sheet</PillTag>
+            </Link>
             <h2 className="type-2 mt-8">
               {showGenericTitle ? 'Related Products' : `Related Products of ${category.name}`}
             </h2>

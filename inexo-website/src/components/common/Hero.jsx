@@ -93,9 +93,10 @@ export function Hero({ slides = defaultSlides }) {
             ) : currentSlide.videoSrc && isPlayingVideo && !videoError ? (
               <video
                 autoPlay
-                className="absolute inset-0 h-full w-full object-cover"
-                loop
+                className="absolute inset-0 h-full w-full object-cover cursor-pointer"
                 muted
+                onEnded={() => setIsPlayingVideo(false)}
+                onClick={() => setIsPlayingVideo(false)}
                 onError={() => setVideoError(true)}
                 playsInline
                 poster={currentSlide.poster}
@@ -111,30 +112,32 @@ export function Hero({ slides = defaultSlides }) {
             )}
           </div>
 
-          <div className="absolute inset-0 bg-[rgba(0,48,122,0.63)]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a2d57]/72 via-[#0a2d57]/48 to-transparent" />
+          <div className={`absolute inset-0 bg-[rgba(0,48,122,0.63)] pointer-events-none transition-opacity duration-500 ${isPlayingVideo ? 'opacity-[0.45]' : 'opacity-100'}`} />
+          <div className={`absolute inset-0 bg-gradient-to-r from-[#0a2d57]/72 via-[#0a2d57]/48 to-transparent pointer-events-none transition-opacity duration-500 ${isPlayingVideo ? 'opacity-[0.45]' : 'opacity-100'}`} />
 
           <div className="relative z-10 flex h-full flex-col justify-center px-5 pb-8 pt-10 sm:px-8 sm:pb-10 lg:pl-[39px] lg:pr-[140px] lg:pb-[44px]">
             <div className={`${direction === 'next' ? 'hero-copy-slide-in-right' : 'hero-copy-slide-in-left'}`} key={`copy-${currentSlide.id}`}>
-              <h1 className="type-1 w-full max-w-3xl min-[1728px]:max-w-[1091px]">
-                {currentSlide.title}
-              </h1>
+              <div className={`transition-opacity duration-500 ${isPlayingVideo ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                <h1 className="type-1 w-full max-w-3xl min-[1728px]:max-w-[1091px]">
+                  {currentSlide.title}
+                </h1>
 
-              {currentSlide.ctaLabel ? (
-                <div className="mt-8 flex items-center gap-5">
-                  <button
-                    className="button-label-primary min-h-[48px] rounded-[100px] bg-brand-accent-yellow px-5 py-3 transition-colors duration-200 hover:bg-[#ffc933] sm:min-h-[56px] sm:px-7 sm:py-3.5 lg:min-h-[clamp(56px,4.4vw,76px)] lg:h-auto lg:min-w-[clamp(190px,15.3vw,263px)] lg:px-6 lg:py-3"
-                    onClick={() => {
-                      if (currentSlide.videoSrc) {
-                        setIsPlayingVideo((prev) => !prev)
-                      }
-                    }}
-                    type="button"
-                  >
-                    {currentSlide.videoSrc && isPlayingVideo ? 'Pause Video' : currentSlide.ctaLabel}
-                  </button>
-                </div>
-              ) : null}
+                {currentSlide.ctaLabel ? (
+                  <div className="mt-8 flex items-center gap-5">
+                    <button
+                      className="button-label-primary min-h-[48px] rounded-[100px] bg-brand-accent-yellow px-5 py-3 transition-colors duration-200 hover:bg-[#ffc933] sm:min-h-[56px] sm:px-7 sm:py-3.5 lg:min-h-[clamp(56px,4.4vw,76px)] lg:h-auto lg:min-w-[clamp(190px,15.3vw,263px)] lg:px-6 lg:py-3"
+                      onClick={() => {
+                        if (currentSlide.videoSrc) {
+                          setIsPlayingVideo((prev) => !prev)
+                        }
+                      }}
+                      type="button"
+                    >
+                      {currentSlide.videoSrc && isPlayingVideo ? 'Pause Video' : currentSlide.ctaLabel}
+                    </button>
+                  </div>
+                ) : null}
+              </div>
             </div>
 
             {heroSlides.length > 1 && (

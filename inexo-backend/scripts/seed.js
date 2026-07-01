@@ -1,5 +1,5 @@
 const { initializeDatabase } = require('../app/models');
-const { seedCatalogData, seedDefaultAuthData, seedNewsEventsData, seedGalleryItemsData } = require('../app/services/bootstrap.service');
+const { seedCatalogData, seedDefaultAuthData, seedNewsEventsData, seedGalleryItemsData, seedJobOpeningsData } = require('../app/services/bootstrap.service');
 const logger = require('../app/utils/logger');
 
 async function runSeed() {
@@ -18,6 +18,9 @@ async function runSeed() {
 
     logger.info('Seeding gallery items data...');
     await seedGalleryItemsData();
+
+    logger.info('Seeding job openings data...');
+    await seedJobOpeningsData();
     
     logger.info('Database seeding completed successfully!');
     process.exit(0);

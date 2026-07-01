@@ -11,6 +11,14 @@ const navItems = [
   { label: 'Careers', path: '/careers' },
 ]
 
+const isPathActive = (itemPath, currentPath) => {
+  if (!currentPath) return false
+  if (itemPath === '/products') {
+    return currentPath.startsWith('/products') || currentPath.startsWith('/product')
+  }
+  return currentPath === itemPath || currentPath.startsWith(`${itemPath}/`)
+}
+
 export function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { pathname } = useLocation()
@@ -19,7 +27,7 @@ export function Nav() {
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 })
   const [hoveredPath, setHoveredPath] = useState(null)
 
-  const targetPath = hoveredPath
+  const targetPath = hoveredPath || pathname
 
   useEffect(() => {
     setMenuOpen(false)
@@ -28,7 +36,7 @@ export function Nav() {
   useEffect(() => {
     const updateIndicator = () => {
       const activeItem = navItems.find((item) => (
-        item.path && targetPath && (targetPath === item.path || targetPath.startsWith(`${item.path}/`))
+        item.path && targetPath && isPathActive(item.path, targetPath)
       ))
 
       if (!activeItem?.path || !navListRef.current) {
@@ -95,11 +103,12 @@ export function Nav() {
               <li key={item.label}>
                 {item.path ? (
                   <NavLink
-                    className={({ isActive }) =>
-                      `nav-menu-item-text relative inline-flex h-[82px] items-center transition-[color,opacity] duration-200 hover:opacity-70 sm:h-[96px] lg:h-[126px] ${
-                        isActive ? 'text-brand-blue is-active' : ''
+                    className={({ isActive }) => {
+                      const active = isActive || isPathActive(item.path, pathname)
+                      return `nav-menu-item-text relative inline-flex h-[82px] items-center transition-[color,opacity] duration-200 hover:opacity-70 sm:h-[96px] lg:h-[126px] ${
+                        active ? 'text-brand-blue is-active' : ''
                       }`
-                    }
+                    }}
                     ref={(element) => {
                       linkRefs.current[item.path] = element
                     }}
@@ -161,11 +170,12 @@ export function Nav() {
                 <li key={item.label}>
                   {item.path ? (
                     <NavLink
-                      className={({ isActive }) =>
-                        `block rounded-[10px] px-2 py-2 font-medium transition-colors duration-200 ${
-                          isActive ? 'bg-white text-brand-blue' : 'hover:bg-white/80'
+                      className={({ isActive }) => {
+                        const active = isActive || isPathActive(item.path, pathname)
+                        return `block rounded-[10px] px-2 py-2 font-medium transition-colors duration-200 ${
+                          active ? 'bg-white text-brand-blue' : 'hover:bg-white/80'
                         }`
-                      }
+                      }}
                       onClick={() => setMenuOpen(false)}
                       to={item.path}
                     >

@@ -10,13 +10,13 @@ const icons = {
 }
 
 export function PurposeInfoCard({ icon, title, children, className = '', direction = 'left' }) {
-  const startX = direction === 'left' ? -300 : 300
+  const startX = direction === 'left' ? -150 : 150
 
   return (
     <motion.article
       initial={{ opacity: 0, x: startX }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: false, margin: '-100px' }}
+      viewport={{ once: false, amount: 0.1 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex w-full flex-col gap-5 rounded-[15px] bg-white px-5 py-6 sm:flex-row sm:gap-8 sm:px-8 sm:py-8 lg:max-w-[1000px] lg:px-[56px] lg:py-[48px] ${className}`.trim()}
     >

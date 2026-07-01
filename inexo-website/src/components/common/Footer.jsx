@@ -4,11 +4,14 @@ import inexoLogo from '@/assets/images/brand/footer_Logo.svg'
 import instagramIcon from '@/assets/images/brand/insta.svg'
 import xIcon from '@/assets/images/brand/X Icon.svg'
 import youtubeIcon from '@/assets/images/brand/Youtube Icon.svg'
+import safetyPolicyPdf from '@/assets/images/footer/Safety Policy-Inexo.pdf'
+import privacyPolicyPdf from '@/assets/images/footer/Privacy Policy.pdf'
+import tcPdf from '@/assets/images/footer/T&C.pdf'
 
 const quickLinks = [
-  { label: 'Safety Policy', href: '#' },
-  { label: 'Privacy Policy', href: '#' },
-  { label: 'Terms & Conditions', href: '#' },
+  { label: 'Safety Policy', href: safetyPolicyPdf },
+  { label: 'Privacy Policy', href: privacyPolicyPdf },
+  { label: 'Terms & Conditions', href: tcPdf },
 ]
 
 const socialLinks = [
@@ -52,7 +55,7 @@ export function Footer() {
             <ul className="mt-8 space-y-6">
               {quickLinks.map((item) => (
                 <li key={item.label}>
-                  <a className="footer-address-text" href={item.href}>
+                  <a className="footer-address-text" href={item.href} target="_blank" rel="noopener noreferrer">
                     {item.label}
                   </a>
                 </li>

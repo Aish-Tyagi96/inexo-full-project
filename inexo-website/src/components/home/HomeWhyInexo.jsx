@@ -35,6 +35,17 @@ function CountUp({ to, from = 0, duration = 2.5 }) {
 }
 
 function ArrowBadge({ direction = 'right', className = '' }) {
+  let rotationClass = 'rotate-0'
+  if (direction === 'left') {
+    rotationClass = 'rotate-180'
+  } else if (direction === 'up') {
+    rotationClass = 'rotate-270'
+  } else if (direction === 'down') {
+    rotationClass = 'rotate-90'
+  } else if (typeof direction === 'string' && (direction.includes('rotate') || direction.includes('md:rotate'))) {
+    rotationClass = direction
+  }
+
   return (
     <span
       className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-yellow shadow-md ${className}`.trim()}
@@ -42,7 +53,7 @@ function ArrowBadge({ direction = 'right', className = '' }) {
       <img
         alt=""
         aria-hidden="true"
-        className={`h-4 w-4 ${direction === 'left' ? 'rotate-180' : ''}`.trim()}
+        className={`h-4 w-4 ${rotationClass}`.trim()}
         src={arrowIcon}
       />
     </span>
@@ -52,9 +63,9 @@ function ArrowBadge({ direction = 'right', className = '' }) {
 function RetentionCard({ className = '', showArrow = true }) {
   return (
     <motion.article
-      initial={{ opacity: 0, x: -120 }}
+      initial={{ opacity: 0, x: -100 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: false, margin: '-50px' }}
+      viewport={{ once: false, amount: 0.1 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex min-h-[210px] items-center justify-between gap-6 rounded-[15px] bg-[rgba(0,48,122,0.03)] px-7 py-8 sm:px-9 ${className}`.trim()}
     >
@@ -68,7 +79,7 @@ function RetentionCard({ className = '', showArrow = true }) {
         </p>
       </div>
 
-      {showArrow && <ArrowBadge />}
+      {showArrow && <ArrowBadge direction="rotate-90 md:rotate-0" />}
     </motion.article>
   )
 }
@@ -76,9 +87,9 @@ function RetentionCard({ className = '', showArrow = true }) {
 function RetentionStat({ className = '', children }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.85 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: false, margin: '-50px' }}
+      viewport={{ once: false, amount: 0.1 }}
       transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
       className={`flex items-center justify-center rounded-[15px] bg-brand-blue text-white ${className}`.trim()}
     >
@@ -93,9 +104,9 @@ function RetentionStat({ className = '', children }) {
 function RatingStat({ className = '', children }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.85 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: false, margin: '-50px' }}
+      viewport={{ once: false, amount: 0.1 }}
       transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
       className={`flex items-center justify-center rounded-[15px] bg-brand-yellow text-brand-blue ${className}`.trim()}
     >
@@ -113,13 +124,13 @@ function RatingStat({ className = '', children }) {
 function RatingCard({ className = '', showArrow = true }) {
   return (
     <motion.article
-      initial={{ opacity: 0, x: 120 }}
+      initial={{ opacity: 0, x: 100 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: false, margin: '-50px' }}
+      viewport={{ once: false, amount: 0.1 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex min-h-[250px] items-center gap-7 rounded-[15px] bg-[rgba(0,48,122,0.03)] px-7 py-8 sm:px-9 ${className}`.trim()}
     >
-      {showArrow && <ArrowBadge direction="left" />}
+      {showArrow && <ArrowBadge direction="rotate-270 md:rotate-180" />}
 
       <div>
         <h3 className="why-inexo-card-title">

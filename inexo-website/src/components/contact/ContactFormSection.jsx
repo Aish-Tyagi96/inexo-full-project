@@ -2,15 +2,18 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useMutation } from '@tanstack/react-query'
+import Confetti from 'react-confetti'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Container } from '@/components/common/Container'
 import { addSubmission } from '@/features/contact/contactSlice'
 import contactImage from '@/assets/images/ContactUs/ContactUs.png'
 import { useProductCatalogQuery } from '@/hooks/useProductCatalogQuery'
 
-// Mock submit API call for TanStack Query
+import { apiRequest } from '@/services/apiClient'
+
+// Submit API call for TanStack Query
 const submitQuoteRequestApi = async (data) => {
-  await new Promise((resolve) => setTimeout(resolve, 1500)) // simulate network delay
-  return { success: true, data }
+  return await apiRequest('/contact', { method: 'POST', body: data })
 }
 
 export function ContactFormSection() {
@@ -30,6 +33,7 @@ export function ContactFormSection() {
     reset,
   } = useForm({
     defaultValues: {
+      inquiryType: '',
       firstName: '',
       lastName: '',
       organizationName: '',
@@ -43,7 +47,8 @@ export function ContactFormSection() {
     },
   })
 
-  // Watch category and subcategory selections to update options dynamically
+  // Watch inquiry type, category and subcategory selections to update options dynamically
+  const selectedInquiryType = watch('inquiryType')
   const selectedCategorySlug = watch('category')
   const selectedSubCategorySlug = watch('subCategory')
 
@@ -71,6 +76,15 @@ export function ContactFormSection() {
     setValue('product', '')
   }, [selectedSubCategorySlug, setValue])
 
+  // Clear products selections if inquiryType changes to careers
+  useEffect(() => {
+    if (selectedInquiryType === 'careers') {
+      setValue('category', '')
+      setValue('subCategory', '')
+      setValue('product', '')
+    }
+  }, [selectedInquiryType, setValue])
+
   // TanStack Query Mutation
   const mutation = useMutation({
     mutationFn: submitQuoteRequestApi,
@@ -80,7 +94,7 @@ export function ContactFormSection() {
       setSuccess(true)
       reset()
       setTimeout(() => setSuccess(false), 5000)
-    },
+    }
   })
 
   const onSubmit = (data) => {
@@ -88,7 +102,7 @@ export function ContactFormSection() {
   }
 
   return (
-    <section className="bg-white py-14 sm:py-20 lg:py-[100px]">
+    <section id="contact-form" className="bg-white py-14 sm:py-20 lg:py-[100px]">
       <Container>
         {/* Main Title Section */}
         <div className="max-w-4xl mb-12 sm:mb-16">
@@ -103,13 +117,7 @@ export function ContactFormSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* Form Column */}
           <div className="lg:col-span-6 w-full">
-            {success ? (
-              <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-8 rounded-[12px] font-sans text-center shadow-sm">
-                <p className="font-bold text-[20px] mb-2">Request Submitted!</p>
-                <p className="text-[16px]">Thank you for your interest. A representative from INEXO will call you back shortly.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* First Name & Last Name */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
@@ -165,14 +173,14 @@ export function ContactFormSection() {
                   )}
                 </div>
 
-                {/* Select Category */}
+                {/* Inquiry Type */}
                 <div>
-                  <label className="block form-label text-gray-700 mb-2" htmlFor="category">
-                    Select Category<span className="text-red-500">*</span>
+                  <label className="block form-label text-gray-700 mb-2" htmlFor="inquiryType">
+                    Inquiry Type<span className="text-red-500">*</span>
                   </label>
                   <select
-                    id="category"
-                    className={`w-full h-[54px] px-5 rounded-[10px] bg-[#F6FAFF] border ${errors.category ? 'border-red-400 focus:ring-red-100' : 'border-[#e2eaf4] focus:ring-brand-blue/20'
+                    id="inquiryType"
+                    className={`w-full h-[54px] px-5 rounded-[10px] bg-[#F6FAFF] border ${errors.inquiryType ? 'border-red-400 focus:ring-red-100' : 'border-[#e2eaf4] focus:ring-brand-blue/20'
                       } font-sans text-[15px] text-[#00307a] focus:outline-none focus:ring-2 focus:border-[#00307a] transition-all appearance-none cursor-pointer`}
                     style={{
                       backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300307a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
@@ -180,7 +188,34 @@ export function ContactFormSection() {
                       backgroundSize: '16px',
                       backgroundRepeat: 'no-repeat',
                     }}
-                    {...register('category', { required: 'Category selection is required' })}
+                    {...register('inquiryType', { required: 'Inquiry type is required' })}
+                  >
+                    <option value="">Careers or Sales</option>
+                    <option value="careers">Careers</option>
+                    <option value="sales">Sales</option>
+                  </select>
+                  {errors.inquiryType && (
+                    <p className="text-red-500 text-xs mt-1.5 font-semibold">{errors.inquiryType.message}</p>
+                  )}
+                </div>
+
+                {/* Select Category */}
+                <div>
+                  <label className="block form-label text-gray-700 mb-2" htmlFor="category">
+                    Select Category{selectedInquiryType !== 'careers' && <span className="text-red-500">*</span>}
+                  </label>
+                  <select
+                    id="category"
+                    disabled={selectedInquiryType === 'careers'}
+                    className={`w-full h-[54px] px-5 rounded-[10px] bg-[#F6FAFF] border ${errors.category ? 'border-red-400 focus:ring-red-100' : 'border-[#e2eaf4] focus:ring-brand-blue/20'
+                      } font-sans text-[15px] text-[#00307a] focus:outline-none focus:ring-2 focus:border-[#00307a] transition-all appearance-none disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer`}
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300307a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
+                      backgroundPosition: 'right 20px center',
+                      backgroundSize: '16px',
+                      backgroundRepeat: 'no-repeat',
+                    }}
+                    {...register('category', { required: selectedInquiryType === 'careers' ? false : 'Category selection is required' })}
                   >
                     <option value="">Select Category</option>
                     {categories.map((cat) => (
@@ -197,11 +232,11 @@ export function ContactFormSection() {
                 {/* Select Sub Category */}
                 <div>
                   <label className="block form-label text-gray-700 mb-2" htmlFor="subCategory">
-                    Select Sub Category{hasSubCategories && <span className="text-red-500">*</span>}
+                    Select Sub Category{hasSubCategories && selectedInquiryType !== 'careers' && <span className="text-red-500">*</span>}
                   </label>
                   <select
                     id="subCategory"
-                    disabled={!selectedCategorySlug || !hasSubCategories}
+                    disabled={selectedInquiryType === 'careers' || !selectedCategorySlug || !hasSubCategories}
                     className={`w-full h-[54px] px-5 rounded-[10px] bg-[#F6FAFF] border ${errors.subCategory ? 'border-red-400 focus:ring-red-100' : 'border-[#e2eaf4] focus:ring-brand-blue/20'
                       } font-sans text-[15px] text-[#00307a] focus:outline-none focus:ring-2 focus:border-[#00307a] transition-all appearance-none disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer`}
                     style={{
@@ -210,14 +245,16 @@ export function ContactFormSection() {
                       backgroundSize: '16px',
                       backgroundRepeat: 'no-repeat',
                     }}
-                    {...register('subCategory', { required: hasSubCategories ? 'Subcategory selection is required' : false })}
+                    {...register('subCategory', { required: (hasSubCategories && selectedInquiryType !== 'careers') ? 'Subcategory selection is required' : false })}
                   >
                     <option value="">
-                      {!selectedCategorySlug
+                      {selectedInquiryType === 'careers'
                         ? 'Select Sub Category'
-                        : hasSubCategories
+                        : !selectedCategorySlug
                           ? 'Select Sub Category'
-                          : 'No Sub Category Available'}
+                          : hasSubCategories
+                            ? 'Select Sub Category'
+                            : 'No Sub Category Available'}
                     </option>
                     {subCategories.map((sub) => (
                       <option key={sub.id} value={sub.slug}>
@@ -233,11 +270,11 @@ export function ContactFormSection() {
                 {/* Select Product */}
                 <div>
                   <label className="block form-label text-gray-700 mb-2" htmlFor="product">
-                    Select Product<span className="text-red-500">*</span>
+                    Select Product{selectedInquiryType !== 'careers' && <span className="text-red-500">*</span>}
                   </label>
                   <select
                     id="product"
-                    disabled={!selectedCategorySlug || (hasSubCategories && !selectedSubCategorySlug)}
+                    disabled={selectedInquiryType === 'careers' || !selectedCategorySlug || (hasSubCategories && !selectedSubCategorySlug)}
                     className={`w-full h-[54px] px-5 rounded-[10px] bg-[#F6FAFF] border ${errors.product ? 'border-red-400 focus:ring-red-100' : 'border-[#e2eaf4] focus:ring-brand-blue/20'
                       } font-sans text-[15px] text-[#00307a] focus:outline-none focus:ring-2 focus:border-[#00307a] transition-all appearance-none disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer`}
                     style={{
@@ -246,7 +283,7 @@ export function ContactFormSection() {
                       backgroundSize: '16px',
                       backgroundRepeat: 'no-repeat',
                     }}
-                    {...register('product', { required: 'Product selection is required' })}
+                    {...register('product', { required: selectedInquiryType === 'careers' ? false : 'Product selection is required' })}
                   >
                     <option value="">Select Product</option>
                     {productOptions.map((prod) => (
@@ -343,8 +380,12 @@ export function ContactFormSection() {
                 >
                   {mutation.isPending ? 'Requesting...' : 'Request a Call Back'}
                 </button>
+                {mutation.isError && (
+                   <p className="text-red-500 text-sm font-semibold text-center mt-3">
+                     Failed to submit request. Please check your network and try again.
+                   </p>
+                 )}
               </form>
-            )}
           </div>
 
           {/* Image & Location Column */}
@@ -385,6 +426,55 @@ export function ContactFormSection() {
           </div>
         </div>
       </Container>
+
+      {/* Success Modal */}
+      <AnimatePresence>
+        {success && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-[#00173db3] backdrop-blur-sm"
+              onClick={() => setSuccess(false)}
+            />
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: 'spring', bounce: 0.4 }}
+              className="relative w-full max-w-md bg-white rounded-[20px] p-8 sm:p-10 text-center shadow-2xl z-10"
+            >
+              <Confetti
+                width={window.innerWidth}
+                height={window.innerHeight}
+                recycle={false}
+                numberOfPieces={400}
+                gravity={0.15}
+                style={{ position: 'fixed', top: 0, left: 0, zIndex: 100, pointerEvents: 'none' }}
+              />
+              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-[24px] sm:text-[28px] font-serif font-bold text-[#00307a] mb-3">
+                Request Submitted!
+              </h3>
+              <p className="text-[16px] text-gray-600 mb-8 font-sans">
+                Thank you for your interest. A representative from INEXO will reach out to you shortly.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSuccess(false)}
+                className="w-full h-[50px] bg-[#00307a] text-white rounded-lg font-bold tracking-wide hover:bg-[#002257] transition-colors"
+              >
+                Close
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
