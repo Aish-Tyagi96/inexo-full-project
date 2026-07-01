@@ -16,7 +16,7 @@ const ratingPoints = [
 function CountUp({ to, from = 0, duration = 2.5 }) {
   const [count, setCount] = useState(from)
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-50px' })
+  const isInView = useInView(ref, { once: false, margin: '-50px' })
 
   useEffect(() => {
     if (isInView) {
@@ -54,7 +54,7 @@ function RetentionCard({ className = '', showArrow = true }) {
     <motion.article
       initial={{ opacity: 0, x: -120 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: false, margin: '-50px' }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex min-h-[210px] items-center justify-between gap-6 rounded-[15px] bg-[rgba(0,48,122,0.03)] px-7 py-8 sm:px-9 ${className}`.trim()}
     >
@@ -78,7 +78,7 @@ function RetentionStat({ className = '', children }) {
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: false, margin: '-50px' }}
       transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
       className={`flex items-center justify-center rounded-[15px] bg-brand-blue text-white ${className}`.trim()}
     >
@@ -95,7 +95,7 @@ function RatingStat({ className = '', children }) {
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: false, margin: '-50px' }}
       transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
       className={`flex items-center justify-center rounded-[15px] bg-brand-yellow text-brand-blue ${className}`.trim()}
     >
@@ -115,7 +115,7 @@ function RatingCard({ className = '', showArrow = true }) {
     <motion.article
       initial={{ opacity: 0, x: 120 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: false, margin: '-50px' }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex min-h-[250px] items-center gap-7 rounded-[15px] bg-[rgba(0,48,122,0.03)] px-7 py-8 sm:px-9 ${className}`.trim()}
     >

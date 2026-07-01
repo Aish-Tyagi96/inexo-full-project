@@ -1,17 +1,25 @@
-import preekyLogo from '@/assets/images/home/preeky.svg'
-import kmriLogo from '@/assets/images/home/kmri.svg'
-import matrixmetalLogo from '@/assets/images/home/matrixmetal.svg'
-import nelcastLogo from '@/assets/images/home/nel_cast.svg'
-import malnadLogo from '@/assets/images/home/malnad.svg'
+import acerlanLogo from '@/assets/images/home/acerlan_sa_de_cv_logo.jpeg'
+import neoSymLogo from '@/assets/images/home/Neo_Sym_logo.jpg'
+import ashokLeylandLogo from '@/assets/images/home/Ashok_Leyland_logo.png'
+import kiswokLogo from '@/assets/images/home/Kiswok_logo.jpeg'
+import kmriLogo from '@/assets/images/home/KMRI_logo.jpg'
+import malnadLogo from '@/assets/images/home/Malnad_logo.jpeg'
+import matrixLogo from '@/assets/images/home/matrix_logo.jpeg'
+import metsoLogo from '@/assets/images/home/Metso-logo.png'
+import nelcastLogo from '@/assets/images/home/Nelcast_logo.png'
 import { Container } from '@/components/common/Container'
 import { SectionLabel } from '@/components/common/SectionLabel'
 
 const customers = [
-  { name: 'PREEKY', logo: preekyLogo },
+  { name: 'Acerlan SA de CV', logo: acerlanLogo },
+  { name: 'Neo Sym', logo: neoSymLogo },
+  { name: 'Ashok Leyland', logo: ashokLeylandLogo },
+  { name: 'Kiswok', logo: kiswokLogo },
   { name: 'KMRI', logo: kmriLogo },
-  { name: 'Matrix Metals', logo: matrixmetalLogo },
-  { name: 'NELCAST', logo: nelcastLogo },
-  { name: 'MALNAD', logo: malnadLogo },
+  { name: 'Malnad', logo: malnadLogo },
+  { name: 'Matrix', logo: matrixLogo },
+  { name: 'Metso', logo: metsoLogo },
+  { name: 'Nelcast', logo: nelcastLogo },
 ]
 
 export function HomeCustomersWeServe() {
@@ -38,16 +46,23 @@ export function HomeCustomersWeServe() {
             />
 
             {/* Seamless scrolling marquee list wrapper */}
-            <div className="flex w-max animate-marquee-reverse gap-8 md:gap-16 py-4">
+            <div className="flex w-max animate-marquee gap-8 md:gap-16 py-4">
               {marqueeItems.map((customer, idx) => (
                 <div
                   key={`${customer.name}-${idx}`}
-                  className="flex items-center justify-center p-4 w-[160px] sm:w-[200px] md:w-[240px] shrink-0"
+                  className="flex items-center justify-center p-6 shrink-0"
+                  style={{
+                    width: '376px',
+                    height: '184px',
+                    borderRadius: '30px',
+                    background: '#FFF',
+                    boxShadow: '0 22px 34px 0 rgba(0, 0, 0, 0.04)'
+                  }}
                 >
                   <img
                     alt={customer.name}
                     src={customer.logo}
-                    className="h-auto w-full max-w-[120px] sm:max-w-[150px] md:max-w-[180px] object-contain select-none pointer-events-none"
+                    className="max-h-[110px] max-w-[220px] object-contain select-none pointer-events-none"
                   />
                 </div>
               ))}

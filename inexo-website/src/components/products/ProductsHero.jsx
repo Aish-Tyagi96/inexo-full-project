@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import heroArrowRight from '@/assets/images/home/heroarrow-right.svg'
-import productHeroImage from '@/assets/images/Products/INEXO.png'
+import productHeroImage from '@/assets/images/Products/product_banner.jpg'
 import { Container } from '@/components/common/Container'
 
 const defaultSlides = [
@@ -80,21 +80,18 @@ export function ProductsHero({ slides = defaultSlides }) {
       <div className="bg-[linear-gradient(110deg,#F5F5F5_9.65%,#E1EDFF_87.99%)]">
         <Container>
           <div className="relative isolate min-h-[360px] overflow-hidden py-10 sm:min-h-[430px] sm:py-14 lg:min-h-[560px] lg:py-0">
-            <div className="grid min-h-[inherit] grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(0,1fr)_564.743px]">
-              <div className={`${direction === 'next' ? 'hero-copy-slide-in-right' : 'hero-copy-slide-in-left'} min-w-0 max-w-[991px]`} key={`copy-${currentSlide.id}`}>
+            <div className="grid min-h-[inherit] grid-cols-1 items-center gap-12 lg:grid-cols-[60%_40%] lg:gap-16 products-hero-grid">
+              <div className="min-w-0 max-w-[991px]">
                 <h1 className="hero-title-on-light w-full max-w-[991px]">
                   {currentSlide.title}
                 </h1>
               </div>
 
-              <div className="relative mx-auto flex w-full items-center justify-center lg:mx-0 lg:w-[564.743px] lg:h-[555.31px]">
-                <div
-                  className={`${direction === 'next' ? 'hero-media-slide-in-right' : 'hero-media-slide-in-left'} relative flex h-[300px] w-[300px] items-center justify-center sm:h-[380px] sm:w-[380px] lg:h-full lg:w-full`}
-                  key={currentSlide.id}
-                >
+              <div className="relative mx-auto flex items-center justify-center lg:mx-0 w-full max-w-[364px] sm:max-w-[444px] lg:max-w-[387px] aspect-square products-hero-image-wrapper border-2 border-dotted border-[#00307a]/20 p-8 rounded-[24px]">
+                <div className="relative flex h-full w-full items-center justify-center border border-[#00307a]/15 rounded-[14px] overflow-hidden bg-white shadow-[0_25px_60px_rgba(0,48,122,0.18)]">
                   <img
                     alt="Inexo product"
-                    className="h-[82%] w-[82%] object-contain"
+                    className="h-full w-full object-cover rounded-[12px]"
                     src={currentSlide.imageSrc}
                   />
                 </div>
@@ -118,9 +115,9 @@ export function ProductsHero({ slides = defaultSlides }) {
                   {heroSlides.map((slide, index) => (
                     <button
                       aria-label={`Go to slide ${index + 1}`}
-                      className={`rounded-full transition-all duration-200 cursor-pointer ${index === currentIndex
-                          ? 'h-[10px] w-[28px] bg-[#FFB400] sm:h-[12px] sm:w-[34px] lg:h-[14px] lg:w-[39.5px]'
-                          : 'h-[10px] w-[10px] bg-[#7D95BD] sm:h-[12px] sm:w-[12px] lg:h-[15px] lg:w-[15px]'
+                      className={`rounded-[10px] transition-all duration-200 cursor-pointer ${index === currentIndex
+                        ? 'h-[10px] w-[28px] bg-[#FFB400] sm:h-[12px] sm:w-[34px] lg:h-[14px] lg:w-[39.5px]'
+                        : 'h-[10px] w-[10px] bg-[#7D95BD] sm:h-[12px] sm:w-[12px] lg:h-[15px] lg:w-[15px]'
                         }`}
                       key={slide.id}
                       onClick={() => goToSlide(index)}

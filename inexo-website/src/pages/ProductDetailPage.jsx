@@ -27,7 +27,7 @@ function ImageCarousel({ images = [], alt = 'Gallery' }) {
             <button
               aria-label={`Go to image ${i + 1}`}
               key={i}
-              className={`rounded-full transition-all duration-200 ${i === index ? 'h-[10px] w-[32px] bg-[#FFB400]' : 'h-[10px] w-[10px] bg-[#D3D3D3]'}`}
+              className={`rounded-[10px] transition-all duration-200 ${i === index ? 'h-[10px] w-[32px] bg-[#FFB400]' : 'h-[10px] w-[10px] bg-[#D3D3D3]'}`}
               onClick={() => setIndex(i)}
               type="button"
             />

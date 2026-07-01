@@ -17,7 +17,8 @@ const defaultSlides = [
     id: 2,
     title: 'Engineering Excellence Driving Modern Foundries Worldwide @ INEXO',
     ctaLabel: ' Our Event Video',
-    imageSrc: homebanner2,
+    videoSrc: '/videos/IFEX_26_INEXO_BEC.mp4',
+    poster: homebanner2,
   },
   {
     id: 3,
@@ -90,7 +91,7 @@ export function Hero({ slides = defaultSlides }) {
                 src={currentSlide.imageSrc}
               />
             ) : currentSlide.videoSrc && isPlayingVideo && !videoError ? (
-               <video
+              <video
                 autoPlay
                 className="absolute inset-0 h-full w-full object-cover"
                 loop
@@ -153,7 +154,7 @@ export function Hero({ slides = defaultSlides }) {
                   {heroSlides.map((slide, index) => (
                     <button
                       aria-label={`Go to slide ${index + 1}`}
-                      className={`rounded-full transition-all duration-200 cursor-pointer ${index === currentIndex
+                      className={`rounded-[10px] transition-all duration-200 cursor-pointer ${index === currentIndex
                         ? 'h-[10px] w-[28px] bg-[#FFB400] sm:h-[12px] sm:w-[34px] lg:h-[14px] lg:w-[39.5px]'
                         : 'h-[10px] w-[10px] bg-white/85 sm:h-[12px] sm:w-[12px] lg:h-[15px] lg:w-[15px]'
                         }`}

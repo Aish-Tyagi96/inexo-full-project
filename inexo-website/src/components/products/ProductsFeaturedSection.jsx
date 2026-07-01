@@ -96,7 +96,7 @@ export function ProductsFeaturedSection() {
             {Array.from({ length: totalPages }, (_, index) => (
               <button
                 aria-label={`Go to product page ${index + 1}`}
-                className={`rounded-full transition-all duration-200 cursor-pointer ${
+                className={`rounded-[10px] transition-all duration-200 cursor-pointer ${
                   index === currentPage
                     ? 'h-[10px] w-[28px] bg-[#FFB400] sm:h-[12px] sm:w-[34px] lg:h-[14px] lg:w-[39.5px]'
                     : 'h-[10px] w-[10px] bg-[#9AAAC4] sm:h-[12px] sm:w-[12px] lg:h-[15px] lg:w-[15px]'

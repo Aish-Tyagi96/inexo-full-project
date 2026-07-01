@@ -12,7 +12,7 @@ export function HomeNewsMedia() {
 
   if (isLoading) {
     return (
-      <section className="bg-white py-14 sm:py-18 lg:py-[120px]">
+      <section className="bg-surface-page py-14 sm:py-18 lg:py-[120px]">
         <Container>
           <div className="text-center text-gray-500 py-10 font-sans">
             Loading News & Media...
@@ -23,21 +23,18 @@ export function HomeNewsMedia() {
   }
 
   return (
-    <section className="bg-white py-14 sm:py-18 lg:py-[120px]">
+    <section className="bg-surface-page py-14 sm:py-18 lg:py-[120px]">
       <Container>
-        <div className="grid items-start gap-8 min-[1400px]:grid-cols-[630px_minmax(0,1fr)] min-[1400px]:gap-8">
-          <div className="clip-news-panel w-full bg-[#F0F3F8] px-8 py-12 sm:px-10 sm:py-14 lg:h-[395px] lg:px-0 lg:py-0">
-            <div className="w-full max-[1399px]:mx-auto max-[1399px]:flex max-[1399px]:flex-col max-[1399px]:items-center min-[1400px]:ml-[132px] lg:pt-[52px]">
-              <h2 className="type-2 w-full max-[1399px]:mx-auto max-[1399px]:w-[50%] min-[1400px]:w-[70%]">
-                News &amp; Media
-                <br />
-                Center
-              </h2>
+        <div className="grid items-start gap-8 min-[1400px]:grid-cols-[550px_minmax(0,1fr)] min-[1400px]:gap-12">
+          <div className="w-full flex flex-col items-center min-[1400px]:items-start lg:pt-[52px]">
+            <h2 className="type-2 w-full text-center min-[1400px]:text-left">
+              News &amp; Media
+              <br className="hidden min-[1400px]:inline" /> Center
+            </h2>
 
-              <p className="mt-8 news-panel-description w-full text-center lg:mt-[42px] max-[1399px]:mx-auto max-[1399px]:w-[50%] min-[1400px]:w-[70%]">
-                Stay updated with the latest news, milestones, and industry developments from INEXO Cast Metals.
-              </p>
-            </div>
+            <p className="mt-6 news-panel-description w-full text-center mx-auto min-[1400px]:text-left min-[1400px]:mx-0 max-w-[520px] lg:mt-[32px]">
+              Stay updated with the latest news, milestones, and industry developments from INEXO Metal Casts.
+            </p>
           </div>
 
           <div className="w-full">

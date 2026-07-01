@@ -803,7 +803,7 @@ export default function SolutionsShowcase() {
                                   {images.map((_, imageIndex) => (
                                     <button
                                       aria-label={`Go to ${section.label} image ${imageIndex + 1}`}
-                                      className={`rounded-full transition-all duration-200 ${imageIndex === selectedImageIndex
+                                      className={`rounded-[10px] transition-all duration-200 ${imageIndex === selectedImageIndex
                                         ? 'h-[10px] w-[32px] bg-[#FFB400]'
                                         : 'h-[10px] w-[10px] bg-[#D3D3D3]'
                                         }`}

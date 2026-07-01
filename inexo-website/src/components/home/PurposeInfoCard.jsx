@@ -16,7 +16,7 @@ export function PurposeInfoCard({ icon, title, children, className = '', directi
     <motion.article
       initial={{ opacity: 0, x: startX }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
+      viewport={{ once: false, margin: '-100px' }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex w-full flex-col gap-5 rounded-[15px] bg-white px-5 py-6 sm:flex-row sm:gap-8 sm:px-8 sm:py-8 lg:max-w-[1000px] lg:px-[56px] lg:py-[48px] ${className}`.trim()}
     >
