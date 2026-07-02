@@ -1,9 +1,11 @@
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
+import { useState } from 'react'
 import searchIcon from '@/assets/images/brand/search_Icon.svg'
 import { Container } from '@/components/common/Container'
 import { FoundryProductCard } from '@/components/common/FoundryProductCard'
 import { ProductsHero } from '@/components/products/ProductsHero'
 import { PillTag } from '@/components/common/PillTag'
+import { DataSheetModal } from '@/components/common/DataSheetModal'
 import { toProductCard, toSubCategoryCard, toCategoryCard } from '@/data/productCatalog'
 import { useProductCatalogQuery } from '@/hooks/useProductCatalogQuery'
 
@@ -12,6 +14,7 @@ export default function ProductsPage() {
   const { data: catalog, isLoading } = useProductCatalogQuery()
   const category = catalog?.getCategoryBySlug(categorySlug)
   const subCategory = catalog?.getSubCategoryBySlug(subCategorySlug)
+  const [dataSheetOpen, setDataSheetOpen] = useState(false)
 
   if (isLoading) {
     return null
@@ -86,9 +89,9 @@ export default function ProductsPage() {
       <section className="bg-[#f4f4f4] py-16 sm:py-20 lg:py-[120px]">
         <Container>
           <div className="text-center">
-            <Link to="/contact-us#contact-form" className="inline-block transition-transform hover:scale-105">
+            <button type="button" onClick={() => setDataSheetOpen(true)} className="inline-block transition-transform hover:scale-105 cursor-pointer">
               <PillTag className="cursor-pointer">Request Data Sheet</PillTag>
-            </Link>
+            </button>
             <h2 className="type-2 mt-8">
               {showGenericTitle ? 'Related Products' : `Related Products of ${category.name}`}
             </h2>
@@ -101,6 +104,12 @@ export default function ProductsPage() {
           </div>
         </Container>
       </section>
+
+      <DataSheetModal
+        open={dataSheetOpen}
+        onClose={() => setDataSheetOpen(false)}
+        productCategory={category?.name || ''}
+      />
     </>
   )
 }

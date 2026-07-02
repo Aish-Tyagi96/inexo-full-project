@@ -37,8 +37,8 @@ export function HomeNewsMedia() {
             </p>
           </div>
 
-          <div className="w-full">
-            <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="w-full ">
+            <div className="grid  w-full grid-cols-1 gap-8 md:grid-cols-2">
               {latestEvents.map((item) => (
                 <NewsMediaCard
                   key={item.id}

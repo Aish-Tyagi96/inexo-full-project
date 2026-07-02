@@ -2,8 +2,6 @@ import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import Alert from '@mui/material/Alert'
-import Snackbar from '@mui/material/Snackbar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -17,6 +15,7 @@ import Tab from '@mui/material/Tab'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Tabs from '@mui/material/Tabs'
@@ -379,7 +378,6 @@ export default function NewsEventsPage() {
     }
   }
 
-  const activeTitle = activeTab === 'articles' ? 'News Articles' : 'Gallery Items'
   const activeCreateLabel = activeTab === 'articles' ? 'Create News Event' : 'Create Gallery Item'
 
   return (
@@ -395,15 +393,15 @@ export default function NewsEventsPage() {
       {/* Global SnackbarToast handles notifications */}
 
       {activeTab === 'articles' ? (
-        <Paper sx={{ borderRadius: 3, overflow: 'hidden' }} variant="outlined">
-          <Table>
+        <TableContainer component={Paper} sx={{ borderRadius: 3, overflowX: 'auto' }} variant="outlined">
+          <Table sx={{ minWidth: 720, tableLayout: 'fixed' }}>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 700 }}>Image</TableCell>
+                <TableCell sx={{ fontWeight: 700, width: 110 }}>Image</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Title</TableCell>
-                <TableCell sx={{ fontWeight: 700 }}>Date</TableCell>
-                <TableCell sx={{ fontWeight: 700 }}>Order</TableCell>
-                <TableCell align="right" sx={{ fontWeight: 700 }}>Actions</TableCell>
+                <TableCell sx={{ fontWeight: 700, width: 120 }}>Date</TableCell>
+                <TableCell sx={{ fontWeight: 700, width: 80 }}>Order</TableCell>
+                <TableCell align="right" sx={{ fontWeight: 700, width: 100 }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -450,7 +448,7 @@ export default function NewsEventsPage() {
                     </TableCell>
                     <TableCell>
                       <Typography fontWeight={600} variant="body2">{item.title}</Typography>
-                      <Typography color="text.secondary" noWrap sx={{ maxWidth: 350 }} variant="caption">
+                      <Typography color="text.secondary" noWrap sx={{ display: 'block', maxWidth: '100%' }} variant="caption">
                         {item.description}
                       </Typography>
                     </TableCell>
@@ -479,16 +477,16 @@ export default function NewsEventsPage() {
               )}
             </TableBody>
           </Table>
-        </Paper>
+        </TableContainer>
       ) : (
-        <Paper sx={{ borderRadius: 3, overflow: 'hidden' }} variant="outlined">
-          <Table>
+        <TableContainer component={Paper} sx={{ borderRadius: 3, overflowX: 'auto' }} variant="outlined">
+          <Table sx={{ minWidth: 600, tableLayout: 'fixed' }}>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ fontWeight: 700 }}>Image</TableCell>
+                <TableCell sx={{ fontWeight: 700, width: 110 }}>Image</TableCell>
                 <TableCell sx={{ fontWeight: 700 }}>Alt Text</TableCell>
-                <TableCell sx={{ fontWeight: 700 }}>Sort Order</TableCell>
-                <TableCell align="right" sx={{ fontWeight: 700 }}>Actions</TableCell>
+                <TableCell sx={{ fontWeight: 700, width: 110 }}>Sort Order</TableCell>
+                <TableCell align="right" sx={{ fontWeight: 700, width: 100 }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -540,7 +538,7 @@ export default function NewsEventsPage() {
               )}
             </TableBody>
           </Table>
-        </Paper>
+        </TableContainer>
       )}
 
       {/* Dialog for News Articles */}

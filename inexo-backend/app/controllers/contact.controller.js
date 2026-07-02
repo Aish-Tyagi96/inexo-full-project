@@ -1,6 +1,7 @@
 const { ContactInquiry } = require('../models');
 const logger = require('../utils/logger');
 const nodemailer = require('nodemailer');
+const env = require('../config/env');
 
 exports.submitContactForm = async (req, res) => {
   try {
@@ -39,13 +40,13 @@ exports.submitContactForm = async (req, res) => {
     let receiverEmail = '';
 
     if (inquiryType === 'careers') {
-      senderEmail = 'pravin@inexocast.in';
-      senderPassword = process.env.PRAVIN_EMAIL_PASS || '';
-      receiverEmail = 'HR@inexocast.in';
+      senderEmail = env.CAREERS_SENDER_EMAIL;
+      senderPassword = env.CAREERS_SENDER_EMAIL_PASSWORD;
+      receiverEmail = env.CAREERS_RECEIVER_EMAIL;
     } else if (inquiryType === 'sales') {
-      senderEmail = 'suresh@inexocast.in';
-      senderPassword = process.env.SURESH_EMAIL_PASS || '';
-      receiverEmail = 'Sales@inexocast.in';
+      senderEmail = env.SALES_SENDER_EMAIL;
+      senderPassword = env.SALES_SENDER_EMAIL_PASSWORD;
+      receiverEmail = env.SALES_RECEIVER_EMAIL;
     }
 
     if (senderEmail && senderPassword && receiverEmail) {

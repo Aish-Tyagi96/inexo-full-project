@@ -41,6 +41,12 @@ const envSchema = z.object({
   DEFAULT_ADMIN_PHONE: z.string().default('1234567890'),
   DEFAULT_ADMIN_PASSWORD: z.string().min(8).default('Admin@12345'),
   DEFAULT_ROLES: z.string().default('Admin'),
+  CAREERS_SENDER_EMAIL: z.string().email().default('pravin@inexocast.in'),
+  CAREERS_SENDER_EMAIL_PASSWORD: z.string().default(''),
+  CAREERS_RECEIVER_EMAIL: z.string().email().default('HR@inexocast.in'),
+  SALES_SENDER_EMAIL: z.string().email().default('suresh@inexocast.in'),
+  SALES_SENDER_EMAIL_PASSWORD: z.string().default(''),
+  SALES_RECEIVER_EMAIL: z.string().email().default('Sales@inexocast.in'),
 });
 
 
