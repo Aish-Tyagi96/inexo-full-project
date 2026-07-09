@@ -14,7 +14,7 @@ export function AppProviders({ children }) {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <BrowserRouter basename="/admin">{children}</BrowserRouter>
+          <BrowserRouter>{children}</BrowserRouter>
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
