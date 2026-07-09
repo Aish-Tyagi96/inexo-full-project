@@ -1,0 +1,1109 @@
+{
+	"info": {
+		"_postman_id": "inexo-backend-api-collection",
+		"name": "Inexo Backend API",
+		"description": "Complete API collection for the Inexo Backend.\n\nBase URL: http://localhost:4000/api/v1\n\nAuthentication: Bearer Token (JWT) — Obtain via POST /auth/login\n\nDefault Admin Credentials:\n- Email: admin@inexo.com\n- Password: Admin@12345",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:4000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["health"]
+						},
+						"description": "Check if the backend server is running and healthy. Returns environment and database dialect info."
+					},
+					"response": []
+				}
+			],
+			"description": "Server health & status endpoints."
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();",
+									"if (response.token) {",
+									"    pm.collectionVariables.set('authToken', response.token);",
+									"    console.log('Auth token saved to collection variable.');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@inexo.com\",\n    \"password\": \"Admin@12345\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						},
+						"description": "Authenticate an admin user and receive a JWT token. The token is automatically saved to the `authToken` collection variable for use in subsequent requests.\n\n**Rate Limited**: 20 requests per 15 minutes."
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "me"]
+						},
+						"description": "Get the profile of the currently authenticated user. Requires a valid JWT token."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "users"]
+						},
+						"description": "Get a list of all registered auth users. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Register New User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New User\",\n    \"email\": \"newuser@inexo.com\",\n    \"phone\": \"9876543210\",\n    \"password\": \"Password@123\",\n    \"roleName\": \"Admin\",\n    \"profileImage\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/users",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "users"]
+						},
+						"description": "Register a new admin user. Requires Admin role.\n\nFields:\n- `name` (string, required, 2-150 chars)\n- `email` (string, required, valid email)\n- `phone` (string, required, 8-20 chars)\n- `password` (string, required, 8-72 chars)\n- `roleName` (string, required, 2-100 chars)\n- `profileImage` (string, optional, valid URL)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Roles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/roles",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "roles"]
+						},
+						"description": "Get a list of all available roles. Requires authentication."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"roleName\": \"Editor\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/roles",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "roles"]
+						},
+						"description": "Create a new role. Requires Admin role.\n\nFields:\n- `roleName` (string, required, 2-100 chars)"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication & user management endpoints. Login to get a JWT token, manage users and roles.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{authToken}}",
+						"type": "string"
+					}
+				]
+			}
+		},
+		{
+			"name": "Catalog - Public",
+			"item": [
+				{
+					"name": "Get Catalog Tree",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/catalog/tree",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "tree"]
+						},
+						"description": "Get the full catalog tree (categories > sub-categories > products) for public display. No authentication required."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/catalog/categories/:slug",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "categories", ":slug"],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "foundry-chemicals",
+									"description": "Category slug"
+								}
+							]
+						},
+						"description": "Get a single category and its children by slug. No authentication required."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product by Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/catalog/products/:slug",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "products", ":slug"],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "exothermic-sleeves",
+									"description": "Product slug"
+								}
+							]
+						},
+						"description": "Get a single product's full details by slug. No authentication required."
+					},
+					"response": []
+				}
+			],
+			"description": "Public catalog endpoints — no authentication required."
+		},
+		{
+			"name": "Catalog - Admin",
+			"item": [
+				{
+					"name": "Get Admin Catalog Tree",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/catalog/admin/tree",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "admin", "tree"]
+						},
+						"description": "Get the full admin catalog tree. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Category\",\n    \"description\": \"Description for the new category\",\n    \"cardTitle\": \"Card Title\",\n    \"cardDescription\": \"Card description text\",\n    \"image\": null,\n    \"carouselImage\": null,\n    \"carouselText\": \"\",\n    \"sortOrder\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/catalog/categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "categories"]
+						},
+						"description": "Create a new catalog category. Requires Admin role.\n\nFields:\n- `name` (string, required, 2-150 chars)\n- `slug` (string, optional, auto-generated from name)\n- `description` (string, optional, max 5000 chars)\n- `cardTitle` (string, optional, max 191 chars)\n- `cardDescription` (string, optional, max 5000 chars)\n- `image` (string|null, optional)\n- `carouselImage` (string|null, optional)\n- `carouselText` (string, optional, max 5000 chars)\n- `sortOrder` (integer, optional, default 0)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Category Name\",\n    \"description\": \"Updated description\",\n    \"cardTitle\": \"Updated Card Title\",\n    \"cardDescription\": \"Updated card description\",\n    \"image\": null,\n    \"carouselImage\": null,\n    \"carouselText\": \"\",\n    \"sortOrder\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/catalog/categories/:categoryId",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "categories", ":categoryId"],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "1",
+									"description": "Category ID"
+								}
+							]
+						},
+						"description": "Update an existing catalog category by ID. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/catalog/categories/:categoryId",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "categories", ":categoryId"],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "1",
+									"description": "Category ID"
+								}
+							]
+						},
+						"description": "Delete a catalog category by ID. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Sub-Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryId\": 1,\n    \"name\": \"New Sub-Category\",\n    \"description\": \"Description of the sub-category\",\n    \"cardTitle\": \"Sub-Category Card Title\",\n    \"cardDescription\": \"Sub-category card description\",\n    \"image\": null,\n    \"carouselImage\": null,\n    \"carouselText\": \"\",\n    \"sortOrder\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/catalog/sub-categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "sub-categories"]
+						},
+						"description": "Create a new sub-category under a parent category. Requires Admin role.\n\nFields:\n- `categoryId` (integer, required) — Parent category ID\n- `name` (string, required, 2-150 chars)\n- `slug` (string, optional, auto-generated)\n- `description` (string, optional, max 5000 chars)\n- `cardTitle`, `cardDescription`, `image`, `carouselImage`, `carouselText`, `sortOrder`"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Sub-Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryId\": 1,\n    \"name\": \"Updated Sub-Category\",\n    \"description\": \"Updated description\",\n    \"cardTitle\": \"Updated Card Title\",\n    \"cardDescription\": \"Updated card description\",\n    \"image\": null,\n    \"carouselImage\": null,\n    \"carouselText\": \"\",\n    \"sortOrder\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/catalog/sub-categories/:subCategoryId",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "sub-categories", ":subCategoryId"],
+							"variable": [
+								{
+									"key": "subCategoryId",
+									"value": "1",
+									"description": "Sub-Category ID"
+								}
+							]
+						},
+						"description": "Update an existing sub-category by ID. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Sub-Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/catalog/sub-categories/:subCategoryId",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "sub-categories", ":subCategoryId"],
+							"variable": [
+								{
+									"key": "subCategoryId",
+									"value": "1",
+									"description": "Sub-Category ID"
+								}
+							]
+						},
+						"description": "Delete a sub-category by ID. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryId\": 1,\n    \"subCategoryId\": 1,\n    \"name\": \"New Product\",\n    \"description\": \"Detailed product description\",\n    \"cardTitle\": \"Product Card Title\",\n    \"cardDescription\": \"Product card description\",\n    \"image\": null,\n    \"carouselImage\": null,\n    \"carouselDescription\": \"\",\n    \"gallery\": [],\n    \"features\": [\n        {\n            \"title\": \"Feature 1\",\n            \"description\": \"Feature 1 description\"\n        }\n    ],\n    \"benefits\": [\n        \"Benefit 1\",\n        {\n            \"title\": \"Benefit 2\",\n            \"description\": \"Benefit 2 description\"\n        }\n    ],\n    \"sortOrder\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/catalog/products",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "products"]
+						},
+						"description": "Create a new product. Requires Admin role.\n\nFields:\n- `categoryId` (integer|null, optional)\n- `subCategoryId` (integer|null, optional)\n- `name` (string, required, 2-200 chars)\n- `slug` (string, optional, auto-generated)\n- `description` (string, optional, max 20000 chars)\n- `cardTitle`, `cardDescription`, `image`, `carouselImage`, `carouselDescription`\n- `gallery` (array of strings, optional)\n- `features` (array of {title, description}, optional)\n- `benefits` (array of string or {title, description}, optional)\n- `sortOrder` (integer, optional, default 0)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"categoryId\": 1,\n    \"subCategoryId\": 1,\n    \"name\": \"Updated Product Name\",\n    \"description\": \"Updated product description\",\n    \"cardTitle\": \"Updated Card Title\",\n    \"cardDescription\": \"Updated card description\",\n    \"image\": null,\n    \"carouselImage\": null,\n    \"carouselDescription\": \"\",\n    \"gallery\": [],\n    \"features\": [],\n    \"benefits\": [],\n    \"sortOrder\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/catalog/products/:productId",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "products", ":productId"],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "1",
+									"description": "Product ID"
+								}
+							]
+						},
+						"description": "Update an existing product by ID. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/catalog/products/:productId",
+							"host": ["{{baseUrl}}"],
+							"path": ["catalog", "products", ":productId"],
+							"variable": [
+								{
+									"key": "productId",
+									"value": "1",
+									"description": "Product ID"
+								}
+							]
+						},
+						"description": "Delete a product by ID. Requires Admin role."
+					},
+					"response": []
+				}
+			],
+			"description": "Admin catalog management — CRUD operations for categories, sub-categories, and products. All require Admin role."
+		},
+		{
+			"name": "Contact",
+			"item": [
+				{
+					"name": "Submit Contact Form",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"organizationName\": \"Acme Corp\",\n    \"inquiryType\": \"sales\",\n    \"category\": \"Foundry Chemicals\",\n    \"subCategory\": \"Coatings\",\n    \"product\": \"Exothermic Sleeves\",\n    \"preferredDate\": \"2026-07-15\",\n    \"preferredTime\": \"10:00 AM\",\n    \"mobileNumber\": \"9876543210\",\n    \"message\": \"I am interested in learning more about your products.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact"]
+						},
+						"description": "Submit a contact inquiry form. No authentication required.\n\nThe inquiry is saved to the database and an email notification is sent to the configured receiver.\n\n**inquiryType values:**\n- `sales` — routes email to SALES_RECEIVER_EMAIL\n- `careers` — routes email to CAREERS_RECEIVER_EMAIL\n\nFields:\n- `firstName` (string, required)\n- `lastName` (string, required)\n- `organizationName` (string)\n- `inquiryType` (string: 'sales' or 'careers')\n- `category`, `subCategory`, `product` (strings, optional)\n- `preferredDate`, `preferredTime` (strings, optional)\n- `mobileNumber` (string)\n- `message` (string, optional)"
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Contact Form (Careers)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Smith\",\n    \"organizationName\": \"\",\n    \"inquiryType\": \"careers\",\n    \"category\": \"\",\n    \"subCategory\": \"\",\n    \"product\": \"\",\n    \"preferredDate\": \"2026-07-20\",\n    \"preferredTime\": \"02:00 PM\",\n    \"mobileNumber\": \"8765432109\",\n    \"message\": \"I am interested in career opportunities at Inexo.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact"]
+						},
+						"description": "Submit a careers inquiry. Routes the email notification to the CAREERS_RECEIVER_EMAIL."
+					},
+					"response": []
+				}
+			],
+			"description": "Public contact form submission endpoints. Saves to DB and sends email notifications."
+		},
+		{
+			"name": "News & Events",
+			"item": [
+				{
+					"name": "Get All News & Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/news-events",
+							"host": ["{{baseUrl}}"],
+							"path": ["news-events"]
+						},
+						"description": "Get all news and events. No authentication required."
+					},
+					"response": []
+				},
+				{
+					"name": "Create News/Event",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"New Product Launch Event\",\n    \"description\": \"Short description of the event\",\n    \"fullDescription\": \"Full detailed description with all event information...\",\n    \"image\": null,\n    \"imageAlt\": \"Event banner image\",\n    \"eventDate\": \"2026-08-15\",\n    \"readMoreHref\": \"#\",\n    \"sortOrder\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news-events",
+							"host": ["{{baseUrl}}"],
+							"path": ["news-events"]
+						},
+						"description": "Create a new news/event entry. Requires Admin role.\n\nFields:\n- `title` (string, required, 2-255 chars)\n- `slug` (string, optional, auto-generated)\n- `description` (string, optional, max 10000 chars)\n- `fullDescription` (string, optional, max 50000 chars)\n- `image` (string|null, optional)\n- `imageAlt` (string, optional, max 255 chars)\n- `eventDate` (string|null, optional)\n- `readMoreHref` (string, optional, default '#')\n- `sortOrder` (integer, optional, default 0)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update News/Event",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated Event Title\",\n    \"description\": \"Updated short description\",\n    \"fullDescription\": \"Updated full description...\",\n    \"image\": null,\n    \"imageAlt\": \"Updated alt text\",\n    \"eventDate\": \"2026-09-01\",\n    \"readMoreHref\": \"#\",\n    \"sortOrder\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/news-events/:newsEventId",
+							"host": ["{{baseUrl}}"],
+							"path": ["news-events", ":newsEventId"],
+							"variable": [
+								{
+									"key": "newsEventId",
+									"value": "1",
+									"description": "News/Event ID"
+								}
+							]
+						},
+						"description": "Update an existing news/event by ID. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete News/Event",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/news-events/:newsEventId",
+							"host": ["{{baseUrl}}"],
+							"path": ["news-events", ":newsEventId"],
+							"variable": [
+								{
+									"key": "newsEventId",
+									"value": "1",
+									"description": "News/Event ID"
+								}
+							]
+						},
+						"description": "Delete a news/event by ID. Requires Admin role."
+					},
+					"response": []
+				}
+			],
+			"description": "News & Events management — public GET, admin CRUD."
+		},
+		{
+			"name": "Gallery Items",
+			"item": [
+				{
+					"name": "Get All Gallery Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/gallery-items",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery-items"]
+						},
+						"description": "Get all gallery items. No authentication required."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Gallery Item",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"image\": \"/uploads/images/gallery-image.jpg\",\n    \"altText\": \"Gallery image description\",\n    \"sortOrder\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/gallery-items",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery-items"]
+						},
+						"description": "Create a new gallery item. Requires Admin role.\n\nFields:\n- `image` (string, required, image path/URL)\n- `altText` (string, optional, max 255 chars)\n- `sortOrder` (integer, optional, default 0)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Gallery Item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"image\": \"/uploads/images/updated-gallery-image.jpg\",\n    \"altText\": \"Updated gallery description\",\n    \"sortOrder\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/gallery-items/:galleryItemId",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery-items", ":galleryItemId"],
+							"variable": [
+								{
+									"key": "galleryItemId",
+									"value": "1",
+									"description": "Gallery Item ID"
+								}
+							]
+						},
+						"description": "Update a gallery item by ID. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Gallery Item",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/gallery-items/:galleryItemId",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery-items", ":galleryItemId"],
+							"variable": [
+								{
+									"key": "galleryItemId",
+									"value": "1",
+									"description": "Gallery Item ID"
+								}
+							]
+						},
+						"description": "Delete a gallery item by ID. Requires Admin role."
+					},
+					"response": []
+				}
+			],
+			"description": "Gallery item management — public GET, admin CRUD."
+		},
+		{
+			"name": "Job Openings",
+			"item": [
+				{
+					"name": "Get All Job Openings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/jobs",
+							"host": ["{{baseUrl}}"],
+							"path": ["jobs"]
+						},
+						"description": "Get all job openings. No authentication required."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Job Opening",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Senior Software Engineer\",\n    \"description\": \"We are looking for an experienced software engineer to join our team.\",\n    \"link\": \"https://www.linkedin.com/jobs/12345\",\n    \"sortOrder\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/jobs",
+							"host": ["{{baseUrl}}"],
+							"path": ["jobs"]
+						},
+						"description": "Create a new job opening. Requires Admin role.\n\nFields:\n- `title` (string, required, 2-255 chars)\n- `description` (string, optional, max 10000 chars)\n- `link` (string, optional, valid URL, default: linkedin.com)\n- `sortOrder` (integer, optional, default 0)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Job Opening",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated Job Title\",\n    \"description\": \"Updated job description\",\n    \"link\": \"https://www.linkedin.com/jobs/67890\",\n    \"sortOrder\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/jobs/:jobId",
+							"host": ["{{baseUrl}}"],
+							"path": ["jobs", ":jobId"],
+							"variable": [
+								{
+									"key": "jobId",
+									"value": "1",
+									"description": "Job Opening ID"
+								}
+							]
+						},
+						"description": "Update a job opening by ID. Requires Admin role."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Job Opening",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/jobs/:jobId",
+							"host": ["{{baseUrl}}"],
+							"path": ["jobs", ":jobId"],
+							"variable": [
+								{
+									"key": "jobId",
+									"value": "1",
+									"description": "Job Opening ID"
+								}
+							]
+						},
+						"description": "Delete a job opening by ID. Requires Admin role."
+					},
+					"response": []
+				}
+			],
+			"description": "Job openings management — public GET, admin CRUD."
+		},
+		{
+			"name": "Media Upload",
+			"item": [
+				{
+					"name": "Upload Image",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "",
+									"description": "Select an image file to upload"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/uploadImage",
+							"host": ["{{baseUrl}}"],
+							"path": ["uploadImage"]
+						},
+						"description": "Upload a single image file. Requires Admin role.\n\nBody: form-data with key `image` (file)."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload PDF",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pdf",
+									"type": "file",
+									"src": "",
+									"description": "Select a PDF file to upload"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/uploadPdf",
+							"host": ["{{baseUrl}}"],
+							"path": ["uploadPdf"]
+						},
+						"description": "Upload a single PDF file. Requires Admin role.\n\nBody: form-data with key `pdf` (file)."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Video",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "",
+									"description": "Select a video file to upload"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/uploadVideo",
+							"host": ["{{baseUrl}}"],
+							"path": ["uploadVideo"]
+						},
+						"description": "Upload a single video file. Requires Admin role.\n\nBody: form-data with key `video` (file)."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Audio",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "audio",
+									"type": "file",
+									"src": "",
+									"description": "Select an audio file to upload"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/uploadAudio",
+							"host": ["{{baseUrl}}"],
+							"path": ["uploadAudio"]
+						},
+						"description": "Upload a single audio file. Requires Admin role.\n\nBody: form-data with key `audio` (file)."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Multiple Files",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "",
+									"description": "Select one or more files to upload"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/multiplefiles",
+							"host": ["{{baseUrl}}"],
+							"path": ["multiplefiles"]
+						},
+						"description": "Upload multiple files at once. Requires Admin role.\n\nBody: form-data with key `files` (file, multiple)."
+					},
+					"response": []
+				}
+			],
+			"description": "File upload endpoints for images, PDFs, videos, audio, and batch uploads. All require Admin role."
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["dashboard", "stats"]
+						},
+						"description": "Get aggregate dashboard statistics (counts for categories, products, inquiries, etc.). Requires Admin role."
+					},
+					"response": []
+				}
+			],
+			"description": "Admin dashboard statistics endpoint."
+		}
+	]
+}

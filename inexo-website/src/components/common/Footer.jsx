@@ -2,6 +2,7 @@ import facebookIcon from '@/assets/images/brand/Facebook Icon.svg'
 import googleIcon from '@/assets/images/brand/Google Icon.svg'
 import inexoLogo from '@/assets/images/brand/footer_Logo.svg'
 import instagramIcon from '@/assets/images/brand/insta.svg'
+import linkedinIcon from '@/assets/images/brand/LinkedIn Icon.svg'
 import xIcon from '@/assets/images/brand/X Icon.svg'
 import youtubeIcon from '@/assets/images/brand/Youtube Icon.svg'
 import safetyPolicyPdf from '@/assets/images/footer/Safety Policy-Inexo.pdf'
@@ -15,11 +16,12 @@ const quickLinks = [
 ]
 
 const socialLinks = [
-  { label: 'X', href: '#', icon: xIcon },
-  { label: 'Instagram', href: '#', icon: instagramIcon },
-  { label: 'Facebook', href: '#', icon: facebookIcon },
+  // { label: 'X', href: '#', icon: xIcon },
+  // { label: 'Instagram', href: '#', icon: instagramIcon },
+  // { label: 'Facebook', href: '#', icon: facebookIcon },
   { label: 'YouTube', href: '#', icon: youtubeIcon },
-  { label: 'Google', href: '#', icon: googleIcon },
+  { label: 'LinkedIn', href: '#', icon: linkedinIcon },
+  // { label: 'Google', href: '#', icon: googleIcon },
 ]
 
 export function Footer() {

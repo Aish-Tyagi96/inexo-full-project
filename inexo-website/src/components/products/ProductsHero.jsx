@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import heroArrowRight from '@/assets/images/home/heroarrow-right.svg'
-import productHeroImage from '@/assets/images/Products/product_banner.jpg'
+import productHeroImage from '@/assets/images/Products/product_banner.svg'
 import { Container } from '@/components/common/Container'
 
 const defaultSlides = [
@@ -87,11 +87,11 @@ export function ProductsHero({ slides = defaultSlides }) {
                 </h1>
               </div>
 
-              <div className="relative mx-auto flex items-center justify-center lg:mx-0 w-full max-w-[364px] sm:max-w-[444px] lg:max-w-[387px] aspect-square products-hero-image-wrapper border-2 border-dotted border-[#00307a]/20 p-8 rounded-[24px]">
-                <div className="relative flex h-full w-full items-center justify-center border border-[#00307a]/15 rounded-[14px] overflow-hidden bg-white shadow-[0_25px_60px_rgba(0,48,122,0.18)]">
+              <div className="relative mx-auto flex items-center justify-center lg:mx-0 w-full max-w-[364px] sm:max-w-[444px] lg:max-w-[387px] aspect-square products-hero-image-wrapper border-2 border-dotted border-[#00307a]/20 p-[1px] rounded-[12px]">
+                <div className="relative flex h-full w-full items-center justify-center rounded-[8px] overflow-hidden bg-transparent">
                   <img
                     alt="Inexo product"
-                    className="h-full w-full object-cover rounded-[12px]"
+                    className="h-full w-full object-cover rounded-[6px]"
                     src={currentSlide.imageSrc}
                   />
                 </div>
