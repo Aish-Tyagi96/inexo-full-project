@@ -10,8 +10,7 @@ const routes = require('./routes');
 const logger = require('./utils/logger');
 const { errorHandler, notFoundHandler } = require('./middlewares/error.middleware');
 
-const websiteDistPath = path.resolve(__dirname, '../../inexo-website/dist');
-const adminDistPath = path.resolve(__dirname, '../../inexo-admin-portal/dist');
+
 
 const app = express();
 
@@ -54,22 +53,9 @@ app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads')));
 
 app.use(env.API_PREFIX, routes);
 
-// Serve admin portal static files under /admin
-app.use('/admin', express.static(adminDistPath));
-// Serve admin portal client-side routing fallback for /admin/*
-app.get(/^\/admin.*/, (req, res) => {
-  res.sendFile(path.resolve(adminDistPath, 'index.html'));
-});
-
-// Serve website static files under /
-app.use(express.static(websiteDistPath));
-// Serve website client-side routing fallback for *
-// Make sure to bypass api paths and upload paths so they hit their respective handlers / 404s
-app.get(/.*/, (req, res, next) => {
-  if (req.path.startsWith(env.API_PREFIX) || req.path.startsWith('/uploads')) {
-    return next();
-  }
-  res.sendFile(path.resolve(websiteDistPath, 'index.html'));
+// Root status route
+app.get('/', (req, res) => {
+  res.status(200).send('Inexo Backend is running');
 });
 
 app.use(notFoundHandler);
